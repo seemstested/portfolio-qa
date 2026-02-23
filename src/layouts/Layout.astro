@@ -1,0 +1,34 @@
+---
+import SEO from "@/components/SEO.astro";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO title={title} description={description} />
+    <!-- Inline critical theme script to prevent FOUC -->
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const system = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        if ((saved || system) === "dark")
+          document.documentElement.classList.add("dark");
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen antialiased">
+    <slot />
+  </body>
+</html>
