@@ -1,0 +1,11 @@
+---
+import { site } from '@/data/site.config';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="py-8 text-center">
+  <p class="text-sm text-muted-foreground">
+    © {currentYear} {site.author} · Built with Astro
+  </p>
+</footer>
