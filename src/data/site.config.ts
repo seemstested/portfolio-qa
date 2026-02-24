@@ -1,10 +1,10 @@
 import type { SiteConfig, Experience } from '@/types';
 
 export const site: SiteConfig = {
-  title: 'Theodores | Senior QA Engineer',
+  title: 'Theodore\'s Thing',
   description: 'Senior QA Engineer specializing in test automation, API testing, and quality assurance. Building robust testing frameworks and ensuring software quality.',
-  author: 'Theodores',
-  email: 'theodores.dev@gmail.com',
+  author: 'Theodore',
+  email: 'theodore@gmail.com',
   url: 'https://theodores.dev',
   github: 'https://github.com/theodores',
   linkedin: 'https://linkedin.com/in/theodores',
@@ -12,33 +12,62 @@ export const site: SiteConfig = {
 
 export const experiences: Experience[] = [
   {
-    role: 'Senior QA Engineer',
-    company: 'GoTo Financial',
-    period: '2022 - Present',
+    role: 'Software Quality Assurance',
+    type: 'Contract',
+    company: 'muatmuat',
+    period: 'Aug 2025 - Present',
     description: [
-      'Lead test automation initiatives across 5 product teams with 50+ microservices',
-      'Reduced production bugs by 45% through comprehensive testing strategies',
-      'Architected payment reliability framework achieving 99.99% success rate',
-      'Mentored 3 junior QA engineers in automation best practices',
+      'shipping muatparts plus. handling complex b2b cross-border logic (multi-currency, 3 languages) like it\'s nothing.',
+      'early-stage hunter. poking at ui/ux mockups and api contracts before development even starts to kill blockers early.',
+      'keeping muatrans logistics engines tight. verifying matchmaking algorithms and real-time gps tracking for fleet management.',
     ],
   },
   {
-    role: 'QA Engineer',
-    company: 'Fintech Unicorn',
-    period: '2020 - 2022',
+    role: 'Software Quality Assurance',
+    type: 'Freelance',
+    company: 'muatmuat',
+    period: 'Dec 2024 - Aug 2025',
     description: [
-      'Developed API testing suite covering 100+ endpoints with 95% coverage',
-      'Implemented CI/CD pipelines reducing test execution time from 4hrs to 12min',
-      'Established QA processes and documentation standards adopted company-wide',
+      'crushed 200+ test cases across 5 platforms (web, desktop, and 3 mobile apps). making sure the vibe is seamless everywhere.',
+      'hunted down 50+ bugs and worked with the team to nuke post-release issues by 15%. zero tolerance for critical crashes.',
+      'proactive flow exploration. i don’t just follow the tickets—i hunt for hidden edge cases that users might actually hit.',
     ],
   },
   {
-    role: 'Junior QA Engineer',
-    company: 'Early Stage Startup',
-    period: '2019 - 2020',
+    role: 'Digital Talent Development',
+    company: 'Telkomsel',
+    period: 'Jun 2024 - Oct 2024',
     description: [
-      'Built foundation of automated testing from manual processes',
-      'Collaborated with developers to implement testable architecture patterns',
+      'pure grind: made it to the top 11 teams out of 1000+ participants in indonesiaNEXT season 8.',
+      'living the agile scrum life. building functional MVPs while keeping user-centric vibes and sdgs in mind.',
+    ],
+  },
+  {
+    role: 'Frontend Developer',
+    type: 'Part-time',
+    company: 'LCOY Indonesia',
+    period: 'Jun 2024 - Aug 2024',
+    description: [
+      'switching gears to frontend. building responsive views and keeping the digital presence tight for a national climate conference.',
+    ],
+  },
+  {
+    role: 'Frontend Developer',
+    type: 'Part-time',
+    company: 'Money Masters',
+    period: 'Dec 2023 - Mar 2024',
+    description: [
+      'hacking away at UI components for a finance platform. making sure the interface looks clean and performs heavy math correctly.',
+    ],
+  },
+  {
+    role: 'Software Quality Assurance',
+    type: 'Internship',
+    company: 'muatmuat',
+    period: 'Sep 2023 - Dec 2023',
+    description: [
+      'where the obsession started. boosted customer satisfaction by personalizing the test design process.',
+      'slashed bug resolution time by 30% by writing docs so clear and precise that even a non-dev could replicate them.',
     ],
   },
 ];
