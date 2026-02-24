@@ -15,6 +15,7 @@ export interface Project {
 export interface Experience {
   role: string;
   company: string;
+  type?: string;
   period: string;
   description: string[];
 }
