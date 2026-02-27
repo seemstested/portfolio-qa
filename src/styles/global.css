@@ -360,7 +360,160 @@
   opacity: 0.3;
 }
 
-/* ─── Project card ─── */
+/* ─── Brutalist Bento Grid & Spatial UI ─── */
+.project-bento-card {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transform: translateZ(0);
+  /* Hardware acceleration */
+}
+
+.project-bento-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-accent, var(--foreground-primary));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .project-bento-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Base Bento Overlay */
+.glass-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 50%,
+      transparent 0%,
+      var(--card) 100%);
+  z-index: 1;
+}
+
+.dark .glass-overlay {
+  background: radial-gradient(circle at 80% 50%,
+      transparent 0%,
+      #0a0a0ade 100%);
+}
+
+.bento-bg-gradient {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(circle at center, var(--bg-color), transparent 70%);
+  opacity: 0.15;
+  filter: blur(40px);
+  transition: opacity 700ms ease;
+}
+
+.project-bento-card:hover .bento-bg-gradient {
+  opacity: 0.4;
+}
+
+/* Spatial Tags */
+.spatial-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--foreground-secondary);
+  padding: 4px 10px;
+  background: rgba(var(--accent-rgb), 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  transition: all 300ms ease;
+  letter-spacing: 0.02em;
+}
+
+.project-bento-card:hover .spatial-tag {
+  border-color: var(--foreground-primary);
+  color: var(--foreground-primary);
+}
+
+.spatial-tag:hover {
+  background: var(--foreground-primary);
+  color: var(--background);
+}
+
+/* Brutal Buttons */
+.spatial-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  color: var(--foreground-secondary);
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dark .spatial-icon-btn {
+  background: rgba(20, 20, 20, 0.5);
+}
+
+.spatial-icon-btn:hover {
+  background: var(--card-accent, var(--foreground-primary));
+  color: var(--background);
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+/* Brutal Image Setup */
+.brutal-image-mask {
+  mask-image: linear-gradient(to right, transparent, black 40%);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 40%);
+}
+
+.brutal-mesh-bg {
+  background-image: radial-gradient(var(--card-accent) 1px, transparent 1px);
+  background-size: 10px 10px;
+  opacity: 0.4;
+}
+
+/* Pulse Animation for Status Dot */
+@keyframes brutalPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--card-accent), 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 6px rgba(var(--card-accent), 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--card-accent), 0);
+  }
+}
+
+.brutal-pulse {
+  animation: brutalPulse 2s infinite;
+}
+
+/* Staggered Entrance Anim */
+.fade-up-stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUpStagger 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeUpStagger {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Old project card (keep for compatibility) */
 .project-card {
   display: block;
   padding: 14px 16px;
@@ -501,6 +654,119 @@
 
 .custom-cursor.hover {
   transform: translate(-50%, -50%) scale(5);
+}
+
+
+/* ─── Premium Skills Grid - Strict Minimalist ─── */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: -1px;
+  /* collapse borders for a brutalist grid look */
+  width: 100%;
+  border: 1px solid var(--border-color);
+}
+
+@media (max-width: 480px) {
+  .skills-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.skill-item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 16px 14px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  margin: -1px;
+  /* collapse borders */
+  transition: all 200ms ease-out;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.skill-item:hover {
+  background: var(--foreground-primary);
+  border-color: var(--foreground-primary);
+  z-index: 10;
+}
+
+.skill-item:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background-color: var(--background);
+  z-index: 11;
+}
+
+.skill-icon-wrapper {
+  color: var(--foreground-secondary);
+  transition: all 200ms ease;
+  transform: scale(1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-item:hover .skill-icon-wrapper {
+  color: var(--background);
+  transform: scale(1.05);
+}
+
+.skill-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--foreground-primary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 200ms ease;
+  text-align: left;
+}
+
+.skill-item:hover .skill-name {
+  color: var(--background);
+}
+
+.skill-category-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  color: var(--foreground-muted);
+  opacity: 0.4;
+}
+
+.tech-group-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--foreground-muted);
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-group-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+  opacity: 0.5;
 }
 
 /* ─── Reduced motion ─── */
