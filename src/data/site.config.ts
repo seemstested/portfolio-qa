@@ -4,7 +4,7 @@ export const site: SiteConfig = {
   title: 'Theodore\'s Thing',
   description: 'Senior QA Engineer specializing in test automation, API testing, and quality assurance. Building robust testing frameworks and ensuring software quality.',
   author: 'Theodore',
-  email: 'theodore@gmail.com',
+  email: 'hello@theodores.dev',
   url: 'https://theodores.dev',
   github: 'https://github.com/theodores',
   linkedin: 'https://linkedin.com/in/theodores',

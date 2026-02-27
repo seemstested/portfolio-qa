@@ -225,7 +225,7 @@ const skillGroups = [
           automating the boring stuff.
         </p>
         <div class="currently-indicator fade-in fade-in-delay-4">
-          <span>currently: building test automation at</span>
+          <span>Currently: Building test automation at</span>
           <a href="#work">scale for modern web products.</a>
           <span set:html={icons.arrow}></span>
         </div>
@@ -585,41 +585,76 @@ const skillGroups = [
         together.
       </p>
 
-      <div class="flex justify-center gap-3 mb-6">
-        <a
-          href={site.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-ghost"
-          aria-label="GitHub"
-        >
-          <Fragment set:html={icons.github} />
-        </a>
-        <a
-          href={site.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-ghost"
-          aria-label="LinkedIn"
-        >
-          <Fragment set:html={icons.linkedin} />
-        </a>
-        <a
-          href="https://twitter.com/theodores"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-ghost"
-          aria-label="Twitter / X"
-        >
-          <Fragment set:html={icons.twitter} />
-        </a>
-      </div>
+      <div class="flex flex-col items-center gap-6">
+        <div class="flex justify-center gap-3">
+          <a
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-ghost"
+            aria-label="GitHub"
+          >
+            <Fragment set:html={icons.github} />
+          </a>
+          <a
+            href={site.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-ghost"
+            aria-label="LinkedIn"
+          >
+            <Fragment set:html={icons.linkedin} />
+          </a>
+          <a
+            href="https://twitter.com/theodores"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-ghost"
+            aria-label="Twitter / X"
+          >
+            <Fragment set:html={icons.twitter} />
+          </a>
+        </div>
 
-      <a href={`mailto:${site.email}`} class="cta-primary">
-        Get in Touch
-        <Fragment set:html={icons.arrow} />
-      </a>
+        <button
+          id="copy-email"
+          class="cta-primary group relative overflow-hidden"
+          data-email={site.email}
+        >
+          <span
+            class="group-hover:translate-y-[-120%] transition-transform duration-500 inline-block"
+            >{site.email}
+          </span>
+          <span
+            class="absolute inset-0 flex items-center justify-center translate-y-[120%] group-hover:translate-y-0 transition-transform duration-500 font-bold tracking-tight"
+          >
+            Click to Copy
+          </span>
+        </button>
+      </div>
     </section>
+
+    <!-- Marquee -->
+    <div class="marquee-container mt-12 mb-20">
+      <div class="marquee-content">
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+      </div>
+      <div class="marquee-content">
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+        <span class="marquee-text">{site.email}</span>
+      </div>
+    </div>
+
+    <div id="toast" class="spatial-toast">email copied to clipboard.</div>
   </main>
 
   <!-- Footer -->
@@ -760,4 +795,18 @@ const skillGroups = [
         );
       });
   }
+
+  // Email Copy Logic
+  const copyBtn = document.getElementById("copy-email");
+  const toast = document.getElementById("toast");
+
+  copyBtn?.addEventListener("click", () => {
+    const email = copyBtn.getAttribute("data-email") || "";
+    navigator.clipboard.writeText(email);
+
+    toast?.classList.add("visible");
+    setTimeout(() => {
+      toast?.classList.remove("visible");
+    }, 2500);
+  });
 </script>
