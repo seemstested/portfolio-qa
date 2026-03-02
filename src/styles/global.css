@@ -25,6 +25,7 @@
     --muted-foreground: #888;
     --ring: 0 0% 8%;
     --radius: 0.5rem;
+    --bg-gradient: linear-gradient(180deg, #A8D3FF 0%, #FFF4DF 100%);
   }
 
   .dark {
@@ -48,6 +49,7 @@
     --muted: 0 0% 14%;
     --muted-foreground: #666;
     --ring: 0 0% 92%;
+    --bg-gradient: linear-gradient(180deg, #0A0A0A 0%, #0A0A0A 100%);
   }
 }
 
@@ -61,13 +63,15 @@
   }
 
   body {
-    background-color: var(--background-warm) !important;
+    background: var(--bg-gradient) no-repeat center center fixed !important;
+    background-size: cover !important;
     color: var(--foreground-primary);
-    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: "Radio Canada Big", ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 300ms ease, color 300ms ease;
     line-height: 1.7;
+    min-height: 100vh;
   }
 
   ::selection {
@@ -139,23 +143,31 @@
 /* ─── Floating dock ─── */
 .floating-dock {
   position: fixed;
-  bottom: 32px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 9999px;
-  padding: 8px 10px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 4px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
   opacity: 1;
   transition: all 400ms ease;
   animation: floatIn 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dark .floating-dock {
+  background: rgba(14, 14, 14, 0.8);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes floatIn {
@@ -170,19 +182,13 @@
   }
 }
 
-.dark .floating-dock {
-  background: rgba(18, 18, 18, 0.9);
-  border-color: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
 @supports not (backdrop-filter: blur(20px)) {
   .floating-dock {
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   .dark .floating-dock {
-    background: rgba(18, 18, 18, 0.97);
+    background: rgba(14, 14, 14, 0.95);
   }
 }
 
@@ -190,14 +196,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   color: var(--foreground-muted);
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
   text-decoration: none;
   position: relative;
 }
@@ -205,33 +211,39 @@
 .dock-btn:hover {
   color: var(--foreground-primary);
   background: rgba(0, 0, 0, 0.04);
+  transform: scale(1.1);
 }
 
 .dark .dock-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .dock-btn.active {
   color: var(--foreground-primary);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.dark .dock-btn.active {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .dock-btn.active::after {
   content: '';
   position: absolute;
-  bottom: 4px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 3.5px;
-  height: 3.5px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background: var(--foreground-primary);
 }
 
 .dock-divider {
   width: 1px;
-  height: 20px;
+  height: 16px;
   background: var(--border-color);
-  margin: 0 6px;
+  margin: 0 4px;
   flex-shrink: 0;
 }
 
@@ -364,12 +376,15 @@
 .project-bento-card {
   position: relative;
   border-radius: 20px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   transform: translateZ(0);
   /* Hardware acceleration */
 }
@@ -380,8 +395,14 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
+.dark .project-bento-card {
+  background: rgba(18, 18, 18, 0.8);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
 .dark .project-bento-card:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Base Bento Overlay */
@@ -782,7 +803,13 @@
   padding: 40px 0;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-  background: var(--background-warm);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dark .marquee-container {
+  background: rgba(20, 20, 20, 0.3);
 }
 
 .marquee-content {
