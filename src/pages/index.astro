@@ -612,108 +612,121 @@ const skillGroups = [
 
       <!-- Skills Section -->
       <div class="mt-20 border-t border-[var(--border-color)] pt-16">
+        <div class="mt-24 border-t border-[var(--border-color)] pt-20">
+          <h2
+            class="text-[14px] md:text-[16px] font-mono font-medium tracking-[0.1em] text-[var(--foreground-muted)] uppercase mb-3 text-center md:text-left"
+          >
+            skills.
+          </h2>
+          <h3
+            class="text-[36px] sm:text-[44px] md:text-[48px] font-serif font-medium tracking-[-0.03em] leading-[1.0] mb-12 text-center md:text-left"
+          >
+            Technical stack.
+          </h3>
+
+          <div class="space-y-12">
+            {
+              skillGroups.map((group) => (
+                <div class="skill-group scroll-reveal">
+                  <h4 class="text-[14px] md:text-[15px] font-serif font-medium tracking-tight text-[var(--foreground-primary)] mb-4 border-b border-[var(--border-color)] pb-3">
+                    {group.title}
+                  </h4>
+                  <div class="flex flex-wrap gap-x-6 gap-y-3">
+                    {group.skills.map((skill: any) => (
+                      <span class="text-[15px] md:text-[16px] font-sans font-light text-[var(--foreground-secondary)] hover:text-[var(--foreground-primary)] transition-colors cursor-default">
+                        {skill.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <section id="contact" class="py-12 scroll-reveal">
         <h2
           class="text-[16px] font-bold text-[var(--foreground-primary)] mb-1.5"
         >
-          skills.
+          contact.
         </h2>
         <h3
-          class="text-[28px] md:text-[34px] font-extrabold mb-12 tracking-[-0.02em] leading-[1.1]"
+          class="text-[24px] md:text-[28px] font-extrabold mb-2 tracking-[-0.01em]"
         >
-          technical stack.
+          let's connect.
         </h3>
+        <section id="contact" class="py-16 scroll-reveal text-center">
+          <h2
+            class="text-[14px] md:text-[16px] font-mono font-medium tracking-[0.1em] text-[var(--foreground-muted)] uppercase mb-3"
+          >
+            contact.
+          </h2>
+          <h3
+            class="text-[40px] md:text-[56px] font-serif font-medium tracking-[-0.03em] leading-[0.9] mb-4"
+          >
+            Let's connect.
+          </h3>
+          <p
+            class="text-[15px] md:text-[17px] text-[var(--foreground-secondary)] font-sans font-light mb-10 max-w-[400px] leading-[1.7] mx-auto"
+          >
+            Always open to discussing testing, automation, or opportunities to
+            grow together.
+          </p>
 
-        <div class="space-y-12">
-          {
-            skillGroups.map((group) => (
-              <div class="skill-group scroll-reveal">
-                <h4 class="text-[12px] font-bold uppercase tracking-widest text-[var(--foreground-muted)] mb-4 border-b border-[var(--border-color)] pb-3">
-                  {group.title}
-                </h4>
-                <div class="flex flex-wrap gap-x-6 gap-y-2">
-                  {group.skills.map((skill: any) => (
-                    <span
-                      class="text-[16px] md:text-[18px] font-semibold text-[var(--foreground-primary)] hover:text-[var(--foreground-muted)] transition-colors cursor-default"
-                      style="font-feature-settings: 'ss01', 'ss02';"
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
+          <div class="flex flex-col items-center gap-6">
+            <div class="flex justify-center gap-3">
+              <a
+                href={site.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-ghost"
+                aria-label="GitHub"
+              >
+                <Fragment set:html={icons.github} />
+              </a>
+              <a
+                href={site.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-ghost"
+                aria-label="LinkedIn"
+              >
+                <Fragment set:html={icons.linkedin} />
+              </a>
+              <a
+                href="https://twitter.com/theodores"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-ghost"
+                aria-label="Twitter / X"
+              >
+                <Fragment set:html={icons.twitter} />
+              </a>
+            </div>
+
+            <button
+              id="copy-email"
+              class="cta-primary group relative overflow-hidden"
+              data-email={site.email}
+            >
+              <span
+                class="group-hover:translate-y-[-120%] transition-transform duration-500 inline-block"
+                >{site.email}
+              </span>
+              <span
+                class="absolute inset-0 flex items-center justify-center translate-y-[120%] group-hover:translate-y-0 transition-transform duration-500 font-bold tracking-tight"
+              >
+                Click to Copy
+              </span>
+            </button>
+          </div>
+        </section>
+
+        <div id="toast" class="spatial-toast">email copied to clipboard.</div>
+      </section>
     </section>
-
-    <!-- Contact -->
-    <section id="contact" class="py-12 scroll-reveal">
-      <h2 class="text-[16px] font-bold text-[var(--foreground-primary)] mb-1.5">
-        contact.
-      </h2>
-      <h3
-        class="text-[24px] md:text-[28px] font-extrabold mb-2 tracking-[-0.01em]"
-      >
-        let's connect.
-      </h3>
-      <p
-        class="text-[13px] text-[var(--foreground-muted)] mb-8 max-w-xs leading-[1.7]"
-      >
-        Always open to discussing testing, automation, or opportunities to grow
-        together.
-      </p>
-
-      <div class="flex flex-col items-center gap-6">
-        <div class="flex justify-center gap-3">
-          <a
-            href={site.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-ghost"
-            aria-label="GitHub"
-          >
-            <Fragment set:html={icons.github} />
-          </a>
-          <a
-            href={site.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-ghost"
-            aria-label="LinkedIn"
-          >
-            <Fragment set:html={icons.linkedin} />
-          </a>
-          <a
-            href="https://twitter.com/theodores"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-ghost"
-            aria-label="Twitter / X"
-          >
-            <Fragment set:html={icons.twitter} />
-          </a>
-        </div>
-
-        <button
-          id="copy-email"
-          class="cta-primary group relative overflow-hidden"
-          data-email={site.email}
-        >
-          <span
-            class="group-hover:translate-y-[-120%] transition-transform duration-500 inline-block"
-            >{site.email}
-          </span>
-          <span
-            class="absolute inset-0 flex items-center justify-center translate-y-[120%] group-hover:translate-y-0 transition-transform duration-500 font-bold tracking-tight"
-          >
-            Click to Copy
-          </span>
-        </button>
-      </div>
-    </section>
-
-    <div id="toast" class="spatial-toast">email copied to clipboard.</div>
   </main>
 
   <!-- Footer -->
