@@ -556,11 +556,11 @@ const skillGroups = [
               <div class="absolute left-[-4px] top-2 w-2 h-2 rounded-full bg-[var(--border-color)] group-hover:bg-[var(--foreground-primary)] transition-colors" />
               <div class="flex justify-between items-start gap-4 mb-2">
                 <div>
-                  <h4 class="text-[16px] font-bold text-[var(--foreground-primary)]">
+                  <h4 class="text-[17px] md:text-[19px] font-serif font-medium text-[var(--foreground-primary)] mb-1">
                     {exp.role} @ {exp.company}
                   </h4>
-                  <div class="flex items-center gap-2 mt-0.5">
-                    <p class="text-[13px] text-[var(--foreground-muted)] font-mono">
+                  <div class="flex items-center gap-2 mt-0.5 mb-2">
+                    <p class="text-[13px] text-[var(--foreground-muted)] font-mono tracking-tight">
                       {exp.period}
                     </p>
                     {exp.type && (
@@ -568,7 +568,7 @@ const skillGroups = [
                         <span class="text-[10px] text-[var(--border-color)]">
                           •
                         </span>
-                        <p class="text-[12px] text-[var(--foreground-muted)] font-medium uppercase tracking-wider">
+                        <p class="text-[12px] text-[var(--foreground-muted)] font-sans font-medium uppercase tracking-widest">
                           {exp.type}
                         </p>
                       </>
@@ -576,9 +576,9 @@ const skillGroups = [
                   </div>
                 </div>
               </div>
-              <ul class="space-y-2">
+              <ul class="space-y-3 mt-4">
                 {exp.description.map((item) => (
-                  <li class="text-[14px] leading-[1.6] text-[var(--foreground-secondary)] relative pl-4 before:content-['→'] before:absolute before:left-0 before:text-[var(--foreground-muted)] before:text-[10px] before:top-1">
+                  <li class="text-[15px] font-sans font-light leading-[1.7] text-[var(--foreground-secondary)] relative pl-5 before:content-['→'] before:absolute before:left-0 before:text-[var(--foreground-muted)] before:text-[10px] before:top-[4px]">
                     {item}
                   </li>
                 ))}
