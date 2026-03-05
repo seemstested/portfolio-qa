@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="404 — Page Not Found">
+    <main class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        <p class="text-[12px] font-mono uppercase tracking-[0.2em] text-[var(--foreground-muted)] mb-6">
+            Error 404
+        </p>
+        <h1 class="text-[64px] md:text-[96px] font-serif font-medium leading-[0.9] tracking-[-0.04em] text-[var(--foreground-primary)] mb-6">
+            Page not<br />found.
+        </h1>
+        <p class="text-[16px] md:text-[18px] font-serif text-[var(--foreground-secondary)] max-w-[400px] mb-10 leading-[1.6]">
+            Looks like this page doesn't exist — kind of like a bug that slipped through QA. Let's get you back on track.
+        </p>
+        <a
+            href="/"
+            class="inline-flex items-center gap-2 px-6 py-3 text-[13px] font-mono font-medium uppercase tracking-widest bg-[var(--foreground-primary)] text-[var(--background-warm)] rounded-full hover:opacity-80 transition-opacity"
+        >
+            ← Back to Portfolio
+        </a>
+    </main>
+</Layout>
