@@ -1,0 +1,286 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { site } from "@/data/site.config";
+
+const title =
+    "The Art of Intentional Breaking: Why QA Starts Before the First Line of Code";
+const description =
+    "True quality engineering isn't just about finding bugs; it is about architecting systems that are resilient by design. Exploring the shift from reactive testing to proactive quality assurance.";
+const author = "Theodore";
+const publishedDate = "March 2, 2026";
+const readTime = "5 min";
+const category = "Quality Engineering";
+const image = "/images/gallery/manwithcode.png";
+
+const icons = {
+    arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
+    sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+    moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+};
+---
+
+<BlogLayout title={title} description={description}>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Minimalist Navigation -->
+    <header
+        class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center bg-transparent relative z-10"
+    >
+        <a
+            href="/"
+            class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
+        >
+            Theodore's <span class="text-[var(--foreground-muted)] font-normal"
+                >Blogs</span
+            >
+        </a>
+        <div class="flex items-center gap-4">
+            <button
+                id="blog-theme-toggle"
+                class="w-8 h-8 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] hover:border-[var(--foreground-primary)] transition-all"
+                aria-label="Toggle theme"
+            >
+                <span class="dark:hidden" set:html={icons.sun}></span>
+                <span class="hidden dark:block" set:html={icons.moon}></span>
+            </button>
+            <a
+                href="/"
+                class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+            >
+                ← Back
+            </a>
+        </div>
+    </header>
+
+    <main class="w-full max-w-[960px] mx-auto px-6 pb-16">
+        <article class="pt-6 md:pt-12 fade-in">
+            <!-- Article Header -->
+            <div class="mb-12 md:mb-16">
+                <p
+                    class="text-[13px] md:text-[14px] font-mono uppercase text-[var(--foreground-muted)] mb-6 tracking-[0.15em]"
+                >
+                    {category}
+                    <span class="mx-3 opacity-30">/</span>
+                    {readTime}
+                </p>
+                <h1
+                    class="text-[44px] md:text-[64px] lg:text-[72px] font-sans font-medium tracking-tight leading-[0.95] text-[var(--foreground-primary)] max-w-[850px]"
+                >
+                    {title}
+                </h1>
+            </div>
+
+            <!-- Featured Image -->
+            <div
+                class="w-full h-auto mb-16 md:mb-24 overflow-hidden relative fade-in fade-in-delay-2 rounded-sm"
+            >
+                <img
+                    src={image}
+                    alt={title}
+                    class="w-full h-auto object-cover aspect-[16/9] md:aspect-[21/9] scale-[1.01]"
+                    loading="eager"
+                />
+            </div>
+
+            <!-- Content Layout -->
+            <div
+                class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4"
+            >
+                <!-- Sidebar Metadata -->
+                <aside class="w-full md:w-[160px] flex-shrink-0">
+                    <div class="md:sticky md:top-12 space-y-8">
+                        <div class="border-t border-[var(--border-color)] pt-3">
+                            <p
+                                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+                            >
+                                Published
+                            </p>
+                            <p
+                                class="text-[14px] md:text-[15px] font-sans font-medium tracking-tight text-[var(--foreground-primary)]"
+                            >
+                                {publishedDate}
+                            </p>
+                        </div>
+                        <div class="border-t border-[var(--border-color)] pt-3">
+                            <p
+                                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+                            >
+                                Author
+                            </p>
+                            <p
+                                class="text-[14px] md:text-[15px] font-sans font-medium tracking-tight text-[var(--foreground-primary)]"
+                            >
+                                {author}
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Body -->
+                <div class="flex-1 max-w-[640px]">
+                    <p
+                        class="text-[18px] md:text-[20px] leading-[1.7] font-serif text-[var(--foreground-primary)] mb-10 italic opacity-90"
+                    >
+                        Quality is never an accident; it is always the result of
+                        high intention, sincere effort, intelligent direction,
+                        and skillful execution. In the world of modern software,
+                        waiting for a feature to be 'finished' before testing it
+                        is a recipe for technical debt and release-day
+                        disasters.
+                    </p>
+
+                    <h2
+                        class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+                    >
+                        Shifting Left: The QA Mindset
+                    </h2>
+                    <p
+                        class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+                    >
+                        The most expensive bugs are the ones built into the
+                        requirements. High-quality UX starts with a QA engineer
+                        sitting in the design and grooming sessions, poking
+                        holes in logic before a single developer opens their
+                        IDE. By identifying edge cases early, we don't just find
+                        bugs—we prevent them from ever existing.
+                    </p>
+
+                    <h2
+                        class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+                    >
+                        Automation as an Accelerator, Not a Goal
+                    </h2>
+                    <p
+                        class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+                    >
+                        Many teams fall into the trap of 'automating
+                        everything.' However, true quality engineering
+                        understands that automation is a tool to free up human
+                        creativity for exploratory testing. We build robust E2E
+                        suites with Playwright and Cypress not to replace us,
+                        but to give us the confidence to break things in more
+                        interesting ways.
+                    </p>
+
+                    <h2
+                        class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+                    >
+                        Building Resilient Systems
+                    </h2>
+                    <p
+                        class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+                    >
+                        Modern QA involves understanding the infrastructure. We
+                        look at API contracts, database integrity, and
+                        multi-region synchronization. When we ship global
+                        logistics engines like MuatParts, we aren't just
+                        checking if a button works; we are verifying that a
+                        cross-border transaction won't fail if the GPS signal
+                        flickers for a second in the mountains.
+                    </p>
+
+                    <h2
+                        class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+                    >
+                        The Testing Pyramid in Practice
+                    </h2>
+                    <p
+                        class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+                    >
+                        In theory, everyone knows about the testing pyramid. In
+                        practice, most teams invert it—relying heavily on
+                        manual E2E tests while neglecting unit and integration
+                        layers. A well-architected test suite means your unit
+                        tests catch 80% of regressions in seconds, your
+                        integration tests validate contracts between services,
+                        and your E2E tests focus only on critical user journeys.
+                        This isn't just good practice—it's the difference
+                        between deploying with confidence and deploying with
+                        crossed fingers.
+                    </p>
+
+                    <h2
+                        class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+                    >
+                        Quality as a Culture, Not a Phase
+                    </h2>
+                    <p
+                        class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+                    >
+                        At the end of the day, quality assurance is not a gate
+                        at the end of a sprint—it's a mindset that permeates
+                        every standup, every code review, every deployment
+                        pipeline. When developers write testable code because
+                        they understand why it matters, when product managers
+                        define acceptance criteria with edge cases in mind, and
+                        when the entire team owns quality—that's when you
+                        stop finding bugs and start preventing them. That's
+                        the art of intentional breaking.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <!-- Article Footer -->
+        <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div>
+                    <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
+                    <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
+                    <p class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+                </div>
+                <a
+                    href="/"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] font-mono font-medium uppercase tracking-widest border border-[var(--border-color)] rounded-full text-[var(--foreground-primary)] hover:bg-[var(--foreground-primary)] hover:text-[var(--background-warm)] transition-all"
+                >
+                    View Portfolio <span set:html={icons.arrow}></span>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
+                <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+                    ← All Articles
+                </a>
+                <span class="text-[var(--border-color)]">·</span>
+                <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+                    LinkedIn
+                </a>
+                <span class="text-[var(--border-color)]">·</span>
+                <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Blog Footer -->
+    <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
+        <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
+            © {new Date().getFullYear()} {site.author} · Built with Astro
+        </p>
+    </footer>
+</BlogLayout>
+
+<script>
+    // Reading progress bar
+    const progressBar = document.getElementById("scroll-progress") as HTMLElement;
+    window.addEventListener(
+        "scroll",
+        () => {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            if (progressBar)
+                progressBar.style.width = `${h > 0 ? (window.scrollY / h) * 100 : 0}%`;
+        },
+        { passive: true }
+    );
+
+    // Blog theme toggle
+    const blogThemeToggle = document.getElementById("blog-theme-toggle");
+    blogThemeToggle?.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem(
+            "theme",
+            document.documentElement.classList.contains("dark") ? "dark" : "light"
+        );
+    });
+</script>
