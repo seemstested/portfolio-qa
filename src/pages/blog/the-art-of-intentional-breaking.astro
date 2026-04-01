@@ -1,5 +1,6 @@
 ---
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
 
 const title =
@@ -14,12 +15,20 @@ const image = "/images/gallery/manwithcode.png";
 
 const icons = {
     arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
-    sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
-    moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
 };
 ---
 
-<BlogLayout title={title} description={description}>
+<BlogLayout
+  title={title}
+  description={description}
+  type="article"
+  image={image}
+  imageAlt={title}
+  publishedTime={publishedDate}
+  modifiedTime={publishedDate}
+  section={category}
+  tags={[category, "Quality Engineering", "QA", "Software Testing"]}
+>
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <!-- Minimalist Navigation -->
@@ -35,19 +44,12 @@ const icons = {
             >
         </a>
         <div class="flex items-center gap-4">
-            <button
-                id="blog-theme-toggle"
-                class="w-8 h-8 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] hover:border-[var(--foreground-primary)] transition-all"
-                aria-label="Toggle theme"
-            >
-                <span class="dark:hidden" set:html={icons.sun}></span>
-                <span class="hidden dark:block" set:html={icons.moon}></span>
-            </button>
+            <NavbarControls />
             <a
-                href="/"
+                href="/blog"
                 class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
             >
-                ← Back
+                ← All Articles
             </a>
         </div>
     </header>
@@ -59,11 +61,12 @@ const icons = {
                 <p
                     class="text-[13px] md:text-[14px] font-mono uppercase text-[var(--foreground-muted)] mb-6 tracking-[0.15em]"
                 >
-                    {category}
+                    <span data-blog-i18n-key="meta_category">{category}</span>
                     <span class="mx-3 opacity-30">/</span>
-                    {readTime}
+                    <span data-blog-i18n-key="meta_readtime">{readTime}</span>
                 </p>
                 <h1
+                    data-blog-i18n-key="title"
                     class="text-[44px] md:text-[64px] lg:text-[72px] font-sans font-medium tracking-tight leading-[0.95] text-[var(--foreground-primary)] max-w-[850px]"
                 >
                     {title}
@@ -79,6 +82,8 @@ const icons = {
                     alt={title}
                     class="w-full h-auto object-cover aspect-[16/9] md:aspect-[21/9] scale-[1.01]"
                     loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
                 />
             </div>
 
@@ -96,6 +101,7 @@ const icons = {
                                 Published
                             </p>
                             <p
+                                data-blog-i18n-key="published_date"
                                 class="text-[14px] md:text-[15px] font-sans font-medium tracking-tight text-[var(--foreground-primary)]"
                             >
                                 {publishedDate}
@@ -119,6 +125,7 @@ const icons = {
                 <!-- Main Body -->
                 <div class="flex-1 max-w-[640px]">
                     <p
+                        data-blog-i18n-key="intro"
                         class="text-[18px] md:text-[20px] leading-[1.7] font-serif text-[var(--foreground-primary)] mb-10 italic opacity-90"
                     >
                         Quality is never an accident; it is always the result of
@@ -130,11 +137,13 @@ const icons = {
                     </p>
 
                     <h2
+                        data-blog-i18n-key="section_1_title"
                         class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
                     >
                         Shifting Left: The QA Mindset
                     </h2>
                     <p
+                        data-blog-i18n-key="section_1_body"
                         class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
                     >
                         The most expensive bugs are the ones built into the
@@ -142,15 +151,17 @@ const icons = {
                         sitting in the design and grooming sessions, poking
                         holes in logic before a single developer opens their
                         IDE. By identifying edge cases early, we don't just find
-                        bugs—we prevent them from ever existing.
+                        bugs. We prevent them from ever existing.
                     </p>
 
                     <h2
+                        data-blog-i18n-key="section_2_title"
                         class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
                     >
                         Automation as an Accelerator, Not a Goal
                     </h2>
                     <p
+                        data-blog-i18n-key="section_2_body"
                         class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
                     >
                         Many teams fall into the trap of 'automating
@@ -163,11 +174,13 @@ const icons = {
                     </p>
 
                     <h2
+                        data-blog-i18n-key="section_3_title"
                         class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
                     >
                         Building Resilient Systems
                     </h2>
                     <p
+                        data-blog-i18n-key="section_3_body"
                         class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
                     >
                         Modern QA involves understanding the infrastructure. We
@@ -180,40 +193,45 @@ const icons = {
                     </p>
 
                     <h2
+                        data-blog-i18n-key="section_4_title"
                         class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
                     >
                         The Testing Pyramid in Practice
                     </h2>
                     <p
+                        data-blog-i18n-key="section_4_body"
                         class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
                     >
                         In theory, everyone knows about the testing pyramid. In
-                        practice, most teams invert it—relying heavily on
+                        practice, most teams invert it by relying heavily on
                         manual E2E tests while neglecting unit and integration
                         layers. A well-architected test suite means your unit
                         tests catch 80% of regressions in seconds, your
                         integration tests validate contracts between services,
                         and your E2E tests focus only on critical user journeys.
-                        This isn't just good practice—it's the difference
+                        It is like building a house: if the foundation is weak,
+                        the roof will always feel risky. This is not just good practice; it is the difference
                         between deploying with confidence and deploying with
                         crossed fingers.
                     </p>
 
                     <h2
+                        data-blog-i18n-key="section_5_title"
                         class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
                     >
                         Quality as a Culture, Not a Phase
                     </h2>
                     <p
+                        data-blog-i18n-key="section_5_body"
                         class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
                     >
                         At the end of the day, quality assurance is not a gate
-                        at the end of a sprint—it's a mindset that permeates
+                        at the end of a sprint; it is a mindset that permeates
                         every standup, every code review, every deployment
                         pipeline. When developers write testable code because
                         they understand why it matters, when product managers
                         define acceptance criteria with edge cases in mind, and
-                        when the entire team owns quality—that's when you
+                        when the entire team owns quality, that is when you
                         stop finding bugs and start preventing them. That's
                         the art of intentional breaking.
                     </p>
@@ -227,7 +245,7 @@ const icons = {
                 <div>
                     <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
                     <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
-                    <p class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+                    <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
                 </div>
                 <a
                     href="/"
@@ -262,6 +280,68 @@ const icons = {
 </BlogLayout>
 
 <script>
+    window.__blogI18n = {
+        meta_category: { en: "Quality Engineering", id: "Quality Engineering" },
+        meta_readtime: { en: "5 min", id: "5 menit" },
+        title: {
+            en: "The Art of Intentional Breaking: Why QA Starts Before the First Line of Code",
+            id: "Seni Menguji Secara Intensional: Kenapa QA Dimulai Sebelum Baris Kode Pertama",
+        },
+        published_date: { en: "March 2, 2026", id: "2 Maret 2026" },
+        intro: {
+            en: "Quality is never an accident; it is always the result of high intention, sincere effort, intelligent direction, and skillful execution. In the world of modern software, waiting for a feature to be 'finished' before testing it is a recipe for technical debt and release-day disasters.",
+            id: "Kualitas itu nggak pernah terjadi karena kebetulan. Kualitas lahir dari niat yang jelas, effort yang serius, arahan yang tepat, dan eksekusi yang rapi. Di dunia software modern, nunggu fitur 'selesai total' dulu baru dites biasanya cuma jadi resep utang teknis dan drama di hari rilis.",
+        },
+        section_1_title: {
+            en: "Shifting Left: The QA Mindset",
+            id: "Shifting Left: Mindset QA yang Lebih Proaktif",
+        },
+        section_1_body: {
+            en: "The most expensive bugs are the ones built into the requirements. High-quality UX starts with a QA engineer sitting in the design and grooming sessions, poking holes in logic before a single developer opens their IDE. By identifying edge cases early, we don't just find bugs. We prevent them from ever existing.",
+            id: "Bug paling mahal itu biasanya yang sudah kebawa dari tahap requirement. UX yang berkualitas dimulai saat QA ikut dari sesi design dan grooming, lalu menguji logika sebelum developer nulis kode pertama. Waktu edge case ditemukan lebih awal, kita bukan cuma nemu bug, tapi mencegah bug itu lahir sejak awal.",
+        },
+        section_2_title: {
+            en: "Automation as an Accelerator, Not a Goal",
+            id: "Automation Itu Akselerator, Bukan Tujuan Akhir",
+        },
+        section_2_body: {
+            en: "Many teams fall into the trap of 'automating everything.' However, true quality engineering understands that automation is a tool to free up human creativity for exploratory testing. We build robust E2E suites with Playwright and Cypress not to replace us, but to give us the confidence to break things in more interesting ways.",
+            id: "Banyak tim jatuh ke jebakan 'otomasi semua hal'. Padahal quality engineering yang matang paham kalau automation itu alat untuk ngebebasin kapasitas manusia supaya bisa eksplorasi lebih dalam. Kita bangun suite E2E yang kuat pakai Playwright dan Cypress bukan buat menggantikan manusia, tapi buat ngasih ruang menguji hal-hal yang lebih kompleks.",
+        },
+        section_3_title: {
+            en: "Building Resilient Systems",
+            id: "Membangun Sistem yang Tahan Banting",
+        },
+        section_3_body: {
+            en: "Modern QA involves understanding the infrastructure. We look at API contracts, database integrity, and multi-region synchronization. When we ship global logistics engines like MuatParts, we aren't just checking if a button works; we are verifying that a cross-border transaction won't fail if the GPS signal flickers for a second in the mountains.",
+            id: "QA modern menuntut pemahaman infrastruktur juga. Kita cek kontrak API, integritas database, sampai sinkronisasi lintas region. Saat ngirim produk logistik global seperti MuatParts, yang kita validasi bukan cuma tombolnya jalan atau nggak, tapi juga apakah transaksi lintas negara tetap aman walau sinyal GPS sempat drop beberapa detik.",
+        },
+        section_4_title: {
+            en: "The Testing Pyramid in Practice",
+            id: "Testing Pyramid dalam Praktik Nyata",
+        },
+        section_4_body: {
+            en: "In theory, everyone knows about the testing pyramid. In practice, most teams invert it by relying heavily on manual E2E tests while neglecting unit and integration layers. A well-architected test suite means your unit tests catch 80% of regressions in seconds, your integration tests validate contracts between services, and your E2E tests focus only on critical user journeys. It is like building a house: if the foundation is weak, the roof will always feel risky. This is not just good practice; it is the difference between deploying with confidence and deploying with crossed fingers.",
+            id: "Secara teori semua orang paham testing pyramid, tapi di praktik banyak tim malah kebalik: terlalu bergantung ke E2E manual sambil ngabaikan layer unit dan integration. Test suite yang sehat berarti unit test nangkep mayoritas regression dalam hitungan detik, integration test memastikan kontrak antarlayanan aman, dan E2E fokus di journey user yang paling kritis. Ibarat bangun rumah, kalau fondasi lemah, atapnya bakal selalu terasa berisiko. Ini bukan sekadar best practice, tapi pembeda antara deploy dengan percaya diri dan deploy sambil berharap-harap cemas.",
+        },
+        section_5_title: {
+            en: "Quality as a Culture, Not a Phase",
+            id: "Quality Itu Budaya, Bukan Fase",
+        },
+        section_5_body: {
+            en: "At the end of the day, quality assurance is not a gate at the end of a sprint; it is a mindset that permeates every standup, every code review, every deployment pipeline. When developers write testable code because they understand why it matters, when product managers define acceptance criteria with edge cases in mind, and when the entire team owns quality, that is when you stop finding bugs and start preventing them. That's the art of intentional breaking.",
+            id: "Pada akhirnya, quality assurance bukan gerbang di ujung sprint, tapi mindset yang hadir di standup, code review, dan deployment pipeline. Saat developer menulis kode yang testable karena paham alasannya, product manager menyusun acceptance criteria sambil memikirkan edge case, dan seluruh tim merasa punya kualitas, di titik itu kita berhenti sekadar mencari bug lalu mulai mencegahnya. Di situlah seni intentional breaking.",
+        },
+        author_role: {
+            en: "Software Quality Assurance Engineer",
+            id: "Software Quality Assurance Engineer",
+        },
+    };
+
+    const currentLang = localStorage.getItem("lang") === "id" ? "id" : "en";
+    if (typeof window.__applyBlogLang === "function")
+        window.__applyBlogLang(currentLang);
+
     // Reading progress bar
     const progressBar = document.getElementById("scroll-progress") as HTMLElement;
     window.addEventListener(
@@ -274,13 +354,4 @@ const icons = {
         { passive: true }
     );
 
-    // Blog theme toggle
-    const blogThemeToggle = document.getElementById("blog-theme-toggle");
-    blogThemeToggle?.addEventListener("click", () => {
-        document.documentElement.classList.toggle("dark");
-        localStorage.setItem(
-            "theme",
-            document.documentElement.classList.contains("dark") ? "dark" : "light"
-        );
-    });
 </script>
