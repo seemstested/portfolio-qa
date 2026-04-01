@@ -17,8 +17,9 @@ export interface Experience {
   company: string;
   type?: string;
   period: string;
-  description: string[];
+  description?: string[];
 }
+
 
 export interface SiteConfig {
   title: string;
