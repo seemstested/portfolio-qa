@@ -1,0 +1,52 @@
+---
+interface Props {
+  label?: string;
+  title?: string;
+  meta?: string;
+  hideHeader?: boolean;
+  hidePrint?: boolean;
+  plainPage?: boolean;
+}
+
+const {
+  label = "Live Document Preview",
+  title = "QA Artifact",
+  meta = "Sanitized sample • web-first showcase",
+  hideHeader = false,
+  hidePrint = false,
+  plainPage = false,
+} = Astro.props;
+---
+
+<section class="doc-frame-wrap">
+  {
+    !hideHeader && (
+      <div class="doc-frame-toolbar">
+        <div>
+          <p class="doc-frame-label">{label}</p>
+          <h2 class="doc-frame-title">{title}</h2>
+          <p class="doc-frame-meta">{meta}</p>
+        </div>
+        {!hidePrint && (
+          <button type="button" class="doc-frame-print" data-doc-print>
+            Print / Save PDF
+          </button>
+        )}
+      </div>
+    )
+  }
+
+  <article class={plainPage ? "doc-frame-page-plain" : "doc-frame-page"}>
+    <slot />
+  </article>
+</section>
+
+<script is:inline>
+  document.addEventListener("click", function (event) {
+    var target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("[data-doc-print]")) {
+      window.print();
+    }
+  });
+</script>
