@@ -5,9 +5,26 @@ import "@/styles/global.css";
 interface Props {
     title?: string;
     description?: string;
+    type?: "website" | "article";
+    image?: string;
+    imageAlt?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
+    section?: string;
+    tags?: string[];
 }
 
-const { title, description } = Astro.props;
+const {
+    title,
+    description,
+    type = "website",
+    image = "/og-image.png",
+    imageAlt,
+    publishedTime,
+    modifiedTime,
+    section,
+    tags,
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -15,7 +32,17 @@ const { title, description } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <SEO title={title} description={description} />
+        <SEO
+            title={title}
+            description={description}
+            type={type}
+            image={image}
+            imageAlt={imageAlt}
+            publishedTime={publishedTime}
+            modifiedTime={modifiedTime}
+            section={section}
+            tags={tags}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -37,19 +64,192 @@ const { title, description } = Astro.props;
         <style is:global>
             /* Blog specific styling overriding the main gradient background */
             body {
-                background: var(--background, #ffffff) !important;
-            }
-            .dark body {
-                background: var(--background, #0a0a0a) !important;
+                background: hsl(var(--background)) !important;
+                color: var(--foreground-primary);
             }
             /* Remove the float effect to keep reading space completely clean */
             .scroll-progress {
                 background: var(--foreground-primary);
                 opacity: 0.15;
             }
+
         </style>
     </head>
     <body class="min-h-screen antialiased flex flex-col items-center">
         <slot />
+        <script is:inline>
+            (function () {
+                const getI18nMap = () =>
+                    typeof window !== "undefined" &&
+                    window.__blogI18n &&
+                    typeof window.__blogI18n === "object"
+                        ? window.__blogI18n
+                        : null;
+                const root = document.documentElement;
+                const themeBtn = document.getElementById("theme-toggle");
+                const langMenuTrigger =
+                    document.getElementById("lang-menu-trigger");
+                const langMenuPanel = document.getElementById("lang-menu-panel");
+                const langTriggerCode = document.getElementById("lang-trigger-code");
+                const langMenuItems = document.querySelectorAll(
+                    ".lang-menu-item[data-lang]",
+                );
+
+                const applyDetailText = (lang) => {
+                    const isId = lang === "id";
+
+                    document.querySelectorAll('a[href="/blog"]').forEach((el) => {
+                        if (!(el instanceof HTMLAnchorElement)) return;
+                        const txt = (el.textContent || "").trim();
+                        if (!txt.includes("All") && !txt.includes("Semua")) return;
+                        el.textContent = isId ? "← Semua Artikel" : "← All Articles";
+                    });
+
+                    document.querySelectorAll("header a[href='/']").forEach((el) => {
+                        if (!(el instanceof HTMLAnchorElement)) return;
+                        const txt = (el.textContent || "").trim();
+                        if (!txt.startsWith("←")) return;
+                        el.textContent = isId ? "← Portofolio" : "← Portfolio";
+                    });
+
+                    document
+                        .querySelectorAll("a[href='/'].inline-flex")
+                        .forEach((el) => {
+                            if (!(el instanceof HTMLAnchorElement)) return;
+                            const first = el.childNodes[0];
+                            if (first && first.nodeType === Node.TEXT_NODE) {
+                                first.nodeValue = isId
+                                    ? "Lihat Portofolio "
+                                    : "View Portfolio ";
+                            }
+                        });
+
+                    document.querySelectorAll("p").forEach((el) => {
+                        const text = (el.textContent || "").trim();
+                        if (text === "Published" || text === "Diterbitkan") {
+                            el.textContent = isId ? "Diterbitkan" : "Published";
+                        }
+                        if (text === "Author" || text === "Penulis") {
+                            el.textContent = isId ? "Penulis" : "Author";
+                        }
+                        if (text === "Written by" || text === "Ditulis oleh") {
+                            el.textContent = isId ? "Ditulis oleh" : "Written by";
+                        }
+                    });
+
+                    document.querySelectorAll("footer p").forEach((el) => {
+                        const text = el.textContent || "";
+                        if (
+                            text.includes("Built with Astro") ||
+                            text.includes("Dibangun dengan Astro")
+                        ) {
+                            el.textContent = text.replace(
+                                /Built with Astro|Dibangun dengan Astro/g,
+                                isId ? "Dibangun dengan Astro" : "Built with Astro",
+                            );
+                        }
+                    });
+
+                    const i18nMap = getI18nMap();
+                    if (i18nMap) {
+                        document
+                            .querySelectorAll("[data-blog-i18n-key]")
+                            .forEach((el) => {
+                                if (!(el instanceof HTMLElement)) return;
+                                const key = el.dataset.blogI18nKey;
+                                if (!key) return;
+                                const entry = i18nMap[key];
+                                if (!entry) return;
+                                const text =
+                                    lang === "id" ? entry.id || entry.en : entry.en;
+                                if (typeof text === "string") el.textContent = text;
+                            });
+                    }
+                };
+
+                const applyLang = (lang) => {
+                    localStorage.setItem("lang", lang);
+                    root.lang = lang;
+                    if (langMenuTrigger instanceof HTMLElement)
+                        langMenuTrigger.dataset.currentLang = lang;
+                    if (langTriggerCode instanceof HTMLElement)
+                        langTriggerCode.textContent = lang.toUpperCase();
+
+                    document
+                        .querySelectorAll(".lang-flag.is-trigger")
+                        .forEach((el) => {
+                            if (!(el instanceof HTMLElement)) return;
+                            el.style.display =
+                                el.dataset.langIcon === lang ? "flex" : "none";
+                        });
+
+                    langMenuItems.forEach((btn) => {
+                        if (!(btn instanceof HTMLButtonElement)) return;
+                        const active = btn.dataset.lang === lang;
+                        btn.classList.toggle("is-active", active);
+                        btn.setAttribute("aria-current", active ? "true" : "false");
+                    });
+
+                    applyDetailText(lang);
+                };
+
+                const savedLang = localStorage.getItem("lang");
+                applyLang(savedLang === "id" ? "id" : "en");
+                if (typeof window !== "undefined")
+                    window.__applyBlogLang = applyLang;
+
+                themeBtn?.addEventListener("click", () => {
+                    const next = !root.classList.contains("dark");
+                    root.classList.toggle("dark", next);
+                    localStorage.setItem("theme", next ? "dark" : "light");
+                });
+
+                const closeLangMenu = () => {
+                    if (langMenuPanel instanceof HTMLElement)
+                        langMenuPanel.classList.remove("open");
+                    if (langMenuTrigger instanceof HTMLElement)
+                        langMenuTrigger.setAttribute("aria-expanded", "false");
+                };
+
+                langMenuTrigger?.addEventListener("click", () => {
+                    if (!(langMenuPanel instanceof HTMLElement)) return;
+                    const isOpen = langMenuPanel.classList.contains("open");
+                    if (isOpen) {
+                        closeLangMenu();
+                    } else {
+                        langMenuPanel.classList.add("open");
+                        if (langMenuTrigger instanceof HTMLElement)
+                            langMenuTrigger.setAttribute("aria-expanded", "true");
+                    }
+                });
+
+                langMenuItems.forEach((btn) => {
+                    if (!(btn instanceof HTMLButtonElement)) return;
+                    btn.addEventListener("click", () => {
+                        applyLang((btn.dataset.lang === "id" ? "id" : "en"));
+                        closeLangMenu();
+                    });
+                });
+
+                document.addEventListener("click", (event) => {
+                    if (
+                        !(langMenuPanel instanceof HTMLElement) ||
+                        !(langMenuTrigger instanceof HTMLElement)
+                    )
+                        return;
+                    const target = event.target;
+                    if (!(target instanceof Node)) return;
+                    if (
+                        !langMenuPanel.contains(target) &&
+                        !langMenuTrigger.contains(target)
+                    )
+                        closeLangMenu();
+                });
+
+                document.addEventListener("keydown", (event) => {
+                    if (event.key === "Escape") closeLangMenu();
+                });
+            })();
+        </script>
     </body>
 </html>
