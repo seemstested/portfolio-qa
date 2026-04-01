@@ -2,16 +2,24 @@
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
+import { articles } from "@/data/articles";
 
-const title =
-  "Release Confidence Is a System: How QA Turns Uncertainty Into Predictability";
-const description =
-  "Shipping safely is not luck. It is the result of a clear release contract, risk-based testing, and fast feedback loops owned by the whole team.";
+const currentSlug = "/blog/release-confidence-is-a-system";
+const articleData = articles.find((a) => a.slug === currentSlug);
+
+if (!articleData) {
+  throw new Error(`Article data not found for slug: ${currentSlug}`);
+}
+
+const {
+  title,
+  description,
+  image,
+  readTime,
+  category,
+  date: publishedDate,
+} = articleData;
 const author = "Theodore";
-const publishedDate = "March 9, 2026";
-const readTime = "7 min";
-const category = "Release Quality";
-const image = "/images/gallery/pyramid.png";
 
 const icons = {
   arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
@@ -38,7 +46,9 @@ const icons = {
       href="/"
       class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
     >
-      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Blogs</span>
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal"
+        >Blogs</span
+      >
     </a>
     <div class="flex items-center gap-4">
       <NavbarControls />
@@ -82,11 +92,15 @@ const icons = {
         />
       </div>
 
-      <div class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4">
+      <div
+        class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4"
+      >
         <aside class="w-full md:w-[160px] flex-shrink-0">
           <div class="md:sticky md:top-12 space-y-8">
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Published
               </p>
               <p
@@ -97,7 +111,9 @@ const icons = {
               </p>
             </div>
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Author
               </p>
               <p
@@ -120,10 +136,16 @@ const icons = {
             evidence.
           </p>
 
-          <h2 data-blog-i18n-key="section_1_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_1_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Confidence Is Evidence, Not a Feeling
           </h2>
-          <p data-blog-i18n-key="section_1_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_1_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Teams often say, "Looks good, let us ship." That sentence is a red
             flag if it comes without data. Confidence should be backed by pass
             rates, risk coverage, defect trends, and production health signals.
@@ -131,22 +153,34 @@ const icons = {
             fallback exists, then we do not have confidence yet.
           </p>
 
-          <h2 data-blog-i18n-key="section_2_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_2_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Build a Release Contract
           </h2>
-          <p data-blog-i18n-key="section_2_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
-            A release contract is a simple agreement between product, engineering,
-            and QA. It defines what "ready" means before anything can move to
-            production. At minimum, it should include critical path test status,
-            known issue severity, rollback readiness, and monitoring ownership.
-            Think of it like a boarding pass. Without the required checks, you
-            do not board the plane.
+          <p
+            data-blog-i18n-key="section_2_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
+            A release contract is a simple agreement between product,
+            engineering, and QA. It defines what "ready" means before anything
+            can move to production. At minimum, it should include critical path
+            test status, known issue severity, rollback readiness, and
+            monitoring ownership. Think of it like a boarding pass. Without the
+            required checks, you do not board the plane.
           </p>
 
-          <h2 data-blog-i18n-key="section_3_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_3_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Use Risk Maps to Focus Testing Energy
           </h2>
-          <p data-blog-i18n-key="section_3_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_3_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Not every feature needs the same testing depth. Risk mapping helps
             prioritize what can hurt users or revenue the most. Payment, login,
             and order flows should get the deepest coverage. Cosmetic or low
@@ -154,10 +188,16 @@ const icons = {
             wasting QA cycles and keeps the team focused on what matters.
           </p>
 
-          <h2 data-blog-i18n-key="section_4_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_4_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Layer Your Test Strategy Like a Safety Net
           </h2>
-          <p data-blog-i18n-key="section_4_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_4_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Strong releases come from test layers working together. Unit tests
             catch logic issues early, integration tests guard service contracts,
             and selective end-to-end tests validate business-critical journeys.
@@ -166,10 +206,16 @@ const icons = {
             protection points keep you safe under real pressure.
           </p>
 
-          <h2 data-blog-i18n-key="section_5_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_5_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Treat Production as Part of QA
           </h2>
-          <p data-blog-i18n-key="section_5_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_5_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             QA does not end at deployment. Release quality also depends on early
             production verification. Monitor key user journeys, error rates,
             latency, and business events in the first hours after launch. A
@@ -178,26 +224,50 @@ const icons = {
             of you.
           </p>
 
-          <h2 data-blog-i18n-key="section_6_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_6_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             The Goal Is Predictable Delivery
           </h2>
-          <p data-blog-i18n-key="section_6_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_6_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Great QA teams are not measured only by how many bugs they find.
             They are measured by how consistently the organization can ship
             safely. When release contracts are clear, testing is risk-based, and
-            feedback loops are fast, shipping becomes a controlled system instead
-            of a stressful event. That is what release confidence really means.
+            feedback loops are fast, shipping becomes a controlled system
+            instead of a stressful event. That is what release confidence really
+            means.
           </p>
         </div>
       </div>
     </article>
 
-    <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div
+      class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]"
+    >
+      <div
+        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+      >
         <div>
-          <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
-          <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
-          <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+          <p
+            class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2"
+          >
+            Written by
+          </p>
+          <p
+            class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]"
+          >
+            {author}
+          </p>
+          <p
+            data-blog-i18n-key="author_role"
+            class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1"
+          >
+            Software Quality Assurance Engineer
+          </p>
         </div>
         <a
           href="/"
@@ -207,25 +277,45 @@ const icons = {
         </a>
       </div>
 
-      <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
-        <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      <div
+        class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]"
+      >
+        <a
+          href="/blog/"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           ← All Articles
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           LinkedIn
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           GitHub
         </a>
       </div>
     </div>
   </main>
 
-  <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
-    <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
-      © {new Date().getFullYear()} {site.author} · Built with Astro
+  <footer
+    class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8"
+  >
+    <p
+      class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase"
+    >
+      © {new Date().getFullYear()}
+      {site.author} · Built with Astro
     </p>
   </footer>
 </BlogLayout>
@@ -311,5 +401,4 @@ const icons = {
     },
     { passive: true }
   );
-
 </script>

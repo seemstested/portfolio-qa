@@ -2,16 +2,24 @@
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
+import { articles } from "@/data/articles";
 
-const title =
-  "Agile Methodologies for Quality Products: Lessons From a Team That Moved Too Fast";
-const description =
-  "Fast delivery without agile discipline creates hidden quality debt. A practical reflection on how Scrum and Kanban protect product quality and team health.";
+const currentSlug = "/blog/agile-methodologies-for-quality-products";
+const articleData = articles.find((a) => a.slug === currentSlug);
+
+if (!articleData) {
+  throw new Error(`Article data not found for slug: ${currentSlug}`);
+}
+
+const {
+  title,
+  description,
+  image,
+  readTime,
+  category,
+  date: publishedDate,
+} = articleData;
 const author = "Theodore";
-const publishedDate = "March 14, 2026";
-const readTime = "6 min";
-const category = "Agile & Quality";
-const image = "/images/gallery/diving.png";
 
 const icons = {
   arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
@@ -38,7 +46,9 @@ const icons = {
       href="/"
       class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
     >
-      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Blogs</span>
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal"
+        >Blogs</span
+      >
     </a>
     <div class="flex items-center gap-4">
       <NavbarControls />
@@ -82,11 +92,15 @@ const icons = {
         />
       </div>
 
-      <div class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4">
+      <div
+        class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4"
+      >
         <aside class="w-full md:w-[160px] flex-shrink-0">
           <div class="md:sticky md:top-12 space-y-8">
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Published
               </p>
               <p
@@ -97,7 +111,9 @@ const icons = {
               </p>
             </div>
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Author
               </p>
               <p
@@ -115,15 +131,21 @@ const icons = {
             class="text-[18px] md:text-[20px] leading-[1.7] font-serif text-[var(--foreground-primary)] mb-10 italic opacity-90"
           >
             I once worked in a startup where the pace was so extreme that every
-            day felt like a production fire drill. We moved fast, but we did
-            not move in a sustainable system. No real Scrum, no Kanban flow,
-            and QA was still fully manual.
+            day felt like a production fire drill. We moved fast, but we did not
+            move in a sustainable system. No real Scrum, no Kanban flow, and QA
+            was still fully manual.
           </p>
 
-          <h2 data-blog-i18n-key="section_1_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_1_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Fast Pace Without Method Is Just Chaos
           </h2>
-          <p data-blog-i18n-key="section_1_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_1_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Working almost 12 hours per day became normal. Regression cycles got
             longer, not shorter. Team energy dropped, quality issues repeated,
             and everyone felt tired before the sprint ended. It looked fast from
@@ -131,10 +153,16 @@ const icons = {
             speed without knowing where the finish line was.
           </p>
 
-          <h2 data-blog-i18n-key="section_2_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_2_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Why Scrum Matters for Quality
           </h2>
-          <p data-blog-i18n-key="section_2_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_2_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Scrum is not ceremony for ceremony's sake. It creates rhythm.
             Planning protects scope, daily sync reduces surprise, and sprint
             review gives space for real feedback before bigger damage happens.
@@ -142,21 +170,33 @@ const icons = {
             instead of always reacting at the end.
           </p>
 
-          <h2 data-blog-i18n-key="section_3_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_3_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Why Kanban Matters for QA Workload
           </h2>
-          <p data-blog-i18n-key="section_3_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_3_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Kanban helps teams see bottlenecks in plain sight. When too many
             tickets are in progress, context switching explodes and quality
             drops. A visible board with work-in-progress limits acts like a
-            traffic light system. It prevents the team from opening ten roads
-            at once and crashing into deadline pressure.
+            traffic light system. It prevents the team from opening ten roads at
+            once and crashing into deadline pressure.
           </p>
 
-          <h2 data-blog-i18n-key="section_4_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_4_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Manual QA Needs Process Even More
           </h2>
-          <p data-blog-i18n-key="section_4_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_4_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             If QA is mostly manual, process discipline becomes critical. Without
             prioritization, regression turns into endless clicking. With agile
             discipline, QA can define risk-based scope, protect critical paths,
@@ -164,20 +204,32 @@ const icons = {
             stay uncovered.
           </p>
 
-          <h2 data-blog-i18n-key="section_5_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_5_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Quality Product Means Healthy Team
           </h2>
-          <p data-blog-i18n-key="section_5_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_5_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Burnout is a product risk. A tired team misses details, delays
             communication, and struggles to maintain consistency. Agile methods
             are not just delivery tools. They are also guardrails that protect
             people so quality can stay stable in the long run.
           </p>
 
-          <h2 data-blog-i18n-key="section_6_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_6_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Final Reflection
           </h2>
-          <p data-blog-i18n-key="section_6_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_6_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             I still believe in speed, especially for startups. But speed without
             structure is expensive. Scrum and Kanban give teams a simple
             operating system to ship quality apps with less chaos. If a company
@@ -188,12 +240,29 @@ const icons = {
       </div>
     </article>
 
-    <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div
+      class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]"
+    >
+      <div
+        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+      >
         <div>
-          <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
-          <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
-          <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+          <p
+            class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2"
+          >
+            Written by
+          </p>
+          <p
+            class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]"
+          >
+            {author}
+          </p>
+          <p
+            data-blog-i18n-key="author_role"
+            class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1"
+          >
+            Software Quality Assurance Engineer
+          </p>
         </div>
         <a
           href="/"
@@ -203,25 +272,45 @@ const icons = {
         </a>
       </div>
 
-      <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
-        <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      <div
+        class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]"
+      >
+        <a
+          href="/blog/"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           ← All Articles
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           LinkedIn
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           GitHub
         </a>
       </div>
     </div>
   </main>
 
-  <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
-    <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
-      © {new Date().getFullYear()} {site.author} · Built with Astro
+  <footer
+    class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8"
+  >
+    <p
+      class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase"
+    >
+      © {new Date().getFullYear()}
+      {site.author} · Built with Astro
     </p>
   </footer>
 </BlogLayout>
@@ -307,5 +396,4 @@ const icons = {
     },
     { passive: true }
   );
-
 </script>

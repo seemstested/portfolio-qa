@@ -2,16 +2,24 @@
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
+import { articles } from "@/data/articles";
 
-const title =
-    "The Art of Intentional Breaking: Why QA Starts Before the First Line of Code";
-const description =
-    "True quality engineering isn't just about finding bugs; it is about architecting systems that are resilient by design. Exploring the shift from reactive testing to proactive quality assurance.";
+const currentSlug = "/blog/the-art-of-intentional-breaking";
+const articleData = articles.find((a) => a.slug === currentSlug);
+
+if (!articleData) {
+    throw new Error(`Article data not found for slug: ${currentSlug}`);
+}
+
+const {
+    title,
+    description,
+    image,
+    readTime,
+    category,
+    date: publishedDate,
+} = articleData;
 const author = "Theodore";
-const publishedDate = "March 2, 2026";
-const readTime = "5 min";
-const category = "Quality Engineering";
-const image = "/images/gallery/manwithcode.png";
 
 const icons = {
     arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
@@ -19,15 +27,15 @@ const icons = {
 ---
 
 <BlogLayout
-  title={title}
-  description={description}
-  type="article"
-  image={image}
-  imageAlt={title}
-  publishedTime={publishedDate}
-  modifiedTime={publishedDate}
-  section={category}
-  tags={[category, "Quality Engineering", "QA", "Software Testing"]}
+    title={title}
+    description={description}
+    type="article"
+    image={image}
+    imageAlt={title}
+    publishedTime={publishedDate}
+    modifiedTime={publishedDate}
+    section={category}
+    tags={[category, "Quality Engineering", "QA", "Software Testing"]}
 >
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
@@ -210,9 +218,9 @@ const icons = {
                         integration tests validate contracts between services,
                         and your E2E tests focus only on critical user journeys.
                         It is like building a house: if the foundation is weak,
-                        the roof will always feel risky. This is not just good practice; it is the difference
-                        between deploying with confidence and deploying with
-                        crossed fingers.
+                        the roof will always feel risky. This is not just good
+                        practice; it is the difference between deploying with
+                        confidence and deploying with crossed fingers.
                     </p>
 
                     <h2
@@ -231,21 +239,38 @@ const icons = {
                         pipeline. When developers write testable code because
                         they understand why it matters, when product managers
                         define acceptance criteria with edge cases in mind, and
-                        when the entire team owns quality, that is when you
-                        stop finding bugs and start preventing them. That's
-                        the art of intentional breaking.
+                        when the entire team owns quality, that is when you stop
+                        finding bugs and start preventing them. That's the art
+                        of intentional breaking.
                     </p>
                 </div>
             </div>
         </article>
 
         <!-- Article Footer -->
-        <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div
+            class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]"
+        >
+            <div
+                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+            >
                 <div>
-                    <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
-                    <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
-                    <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+                    <p
+                        class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2"
+                    >
+                        Written by
+                    </p>
+                    <p
+                        class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]"
+                    >
+                        {author}
+                    </p>
+                    <p
+                        data-blog-i18n-key="author_role"
+                        class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1"
+                    >
+                        Software Quality Assurance Engineer
+                    </p>
                 </div>
                 <a
                     href="/"
@@ -255,16 +280,31 @@ const icons = {
                 </a>
             </div>
 
-            <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
-                <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+            <div
+                class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]"
+            >
+                <a
+                    href="/blog/"
+                    class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+                >
                     ← All Articles
                 </a>
                 <span class="text-[var(--border-color)]">·</span>
-                <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+                <a
+                    href={site.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+                >
                     LinkedIn
                 </a>
                 <span class="text-[var(--border-color)]">·</span>
-                <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+                <a
+                    href={site.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+                >
                     GitHub
                 </a>
             </div>
@@ -272,9 +312,14 @@ const icons = {
     </main>
 
     <!-- Blog Footer -->
-    <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
-        <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
-            © {new Date().getFullYear()} {site.author} · Built with Astro
+    <footer
+        class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8"
+    >
+        <p
+            class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase"
+        >
+            © {new Date().getFullYear()}
+            {site.author} · Built with Astro
         </p>
     </footer>
 </BlogLayout>
@@ -343,15 +388,19 @@ const icons = {
         window.__applyBlogLang(currentLang);
 
     // Reading progress bar
-    const progressBar = document.getElementById("scroll-progress") as HTMLElement;
+    const progressBar = document.getElementById(
+        "scroll-progress"
+    ) as HTMLElement;
     window.addEventListener(
         "scroll",
         () => {
-            const h = document.documentElement.scrollHeight - window.innerHeight;
+            const h =
+                document.documentElement.scrollHeight - window.innerHeight;
             if (progressBar)
-                progressBar.style.width = `${h > 0 ? (window.scrollY / h) * 100 : 0}%`;
+                progressBar.style.width = `${
+                    h > 0 ? (window.scrollY / h) * 100 : 0
+                }%`;
         },
         { passive: true }
     );
-
 </script>

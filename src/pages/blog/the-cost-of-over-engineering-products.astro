@@ -2,16 +2,24 @@
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
+import { articles } from "@/data/articles";
 
-const title =
-  "The Cost of Over-Engineering Products: Building Unicorn Features for Nobody";
-const description =
-  "When teams skip MVP and ignore user feedback, product development becomes expensive guesswork. A practical reflection from startup reality.";
+const currentSlug = "/blog/the-cost-of-over-engineering-products";
+const articleData = articles.find((a) => a.slug === currentSlug);
+
+if (!articleData) {
+  throw new Error(`Article data not found for slug: ${currentSlug}`);
+}
+
+const {
+  title,
+  description,
+  image,
+  readTime,
+  category,
+  date: publishedDate,
+} = articleData;
 const author = "Theodore";
-const publishedDate = "March 21, 2026";
-const readTime = "7 min";
-const category = "Product Quality";
-const image = "/images/gallery/canyon.png";
 
 const icons = {
   arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
@@ -38,7 +46,9 @@ const icons = {
       href="/"
       class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
     >
-      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Blogs</span>
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal"
+        >Blogs</span
+      >
     </a>
     <div class="flex items-center gap-4">
       <NavbarControls />
@@ -82,11 +92,15 @@ const icons = {
         />
       </div>
 
-      <div class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4">
+      <div
+        class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4"
+      >
         <aside class="w-full md:w-[160px] flex-shrink-0">
           <div class="md:sticky md:top-12 space-y-8">
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Published
               </p>
               <p
@@ -97,7 +111,9 @@ const icons = {
               </p>
             </div>
             <div class="border-t border-[var(--border-color)] pt-3">
-              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+              <p
+                class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1"
+              >
                 Author
               </p>
               <p
@@ -119,60 +135,96 @@ const icons = {
             many features, but very few users truly needed them.
           </p>
 
-          <h2 data-blog-i18n-key="section_1_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_1_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             No MVP, No Reality Check
           </h2>
-          <p data-blog-i18n-key="section_1_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_1_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             The core problem was simple: no MVP mindset. Instead of validating a
             small core solution, we jumped straight into full-scale feature
             development. Without that first reality check, teams can mistake
             internal assumptions for real user needs.
           </p>
 
-          <h2 data-blog-i18n-key="section_2_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_2_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             UAT Without Real Users Is Theater
           </h2>
-          <p data-blog-i18n-key="section_2_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_2_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             UAT became messy because feedback did not come from the right
             audience. Some feedback came from random internal voices, while
             actual user feedback was minimal. If real users are almost not
             there, feature decisions can drift far from market reality.
           </p>
 
-          <h2 data-blog-i18n-key="section_3_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_3_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Over-Engineering Hides Product Risk
           </h2>
-          <p data-blog-i18n-key="section_3_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_3_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Over-engineering looks impressive in demos, but it can hide the
             biggest risk: nobody needs the feature. It is like constructing a
             ten-story building on land that has not passed a soil test. The
             structure gets bigger, while confidence gets weaker.
           </p>
 
-          <h2 data-blog-i18n-key="section_4_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_4_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             What Healthy Product Development Looks Like
           </h2>
-          <p data-blog-i18n-key="section_4_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_4_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Good product teams accept that early versions are imperfect. MVP is
             not a sign of weakness. It is a learning instrument. When users give
             good and bad feedback early, teams can iterate faster, remove
             low-value features, and invest only in what solves real pain.
           </p>
 
-          <h2 data-blog-i18n-key="section_5_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_5_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             The QA Perspective
           </h2>
-          <p data-blog-i18n-key="section_5_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_5_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             QA feels the cost of over-engineering first. Test scope explodes,
             regression takes longer, and critical scenarios can be diluted by
             many low-impact checks. Quality is not only about passing tests. It
             is about proving the product solves the right problem.
           </p>
 
-          <h2 data-blog-i18n-key="section_6_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+          <h2
+            data-blog-i18n-key="section_6_title"
+            class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4"
+          >
             Final Thought
           </h2>
-          <p data-blog-i18n-key="section_6_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+          <p
+            data-blog-i18n-key="section_6_body"
+            class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8"
+          >
             Great products are not built by adding everything. They are built by
             learning quickly, listening carefully, and improving intentionally.
             If we skip MVP and real feedback loops, we are not building a
@@ -182,12 +234,29 @@ const icons = {
       </div>
     </article>
 
-    <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div
+      class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]"
+    >
+      <div
+        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+      >
         <div>
-          <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
-          <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
-          <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+          <p
+            class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2"
+          >
+            Written by
+          </p>
+          <p
+            class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]"
+          >
+            {author}
+          </p>
+          <p
+            data-blog-i18n-key="author_role"
+            class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1"
+          >
+            Software Quality Assurance Engineer
+          </p>
         </div>
         <a
           href="/"
@@ -197,25 +266,45 @@ const icons = {
         </a>
       </div>
 
-      <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
-        <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      <div
+        class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]"
+      >
+        <a
+          href="/blog/"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           ← All Articles
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           LinkedIn
         </a>
         <span class="text-[var(--border-color)]">·</span>
-        <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+        <a
+          href={site.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+        >
           GitHub
         </a>
       </div>
     </div>
   </main>
 
-  <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
-    <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
-      © {new Date().getFullYear()} {site.author} · Built with Astro
+  <footer
+    class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8"
+  >
+    <p
+      class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase"
+    >
+      © {new Date().getFullYear()}
+      {site.author} · Built with Astro
     </p>
   </footer>
 </BlogLayout>
@@ -301,5 +390,4 @@ const icons = {
     },
     { passive: true }
   );
-
 </script>
