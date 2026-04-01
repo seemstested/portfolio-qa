@@ -1,0 +1,121 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { site } from "@/data/site.config";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Automation Tests";
+const description =
+  "Live sample of automation strategy for smoke, regression, and release gate validation.";
+
+const sample = {
+  project: "Regression Gate Automation",
+  context:
+    "Manual regression was slowing release throughput and increasing decision uncertainty before production.",
+  role: "Automation QA",
+  tools: "Playwright, Newman, GitHub Actions, Allure",
+  objective:
+    "Create a stable automation gate that delivers fast, actionable feedback for each release candidate.",
+  strategy: [
+    "PR pipeline runs critical smoke suite plus API contract checks.",
+    "Nightly pipeline runs broader regression and flaky-test diagnostics.",
+    "Release candidate gate runs deterministic critical-path scenarios only.",
+  ],
+  suiteMatrix: [
+    ["Suite", "Type", "Frequency", "Gate Impact"],
+    ["Critical Smoke", "UI + API", "Per Pull Request", "Blocking"],
+    ["Contract Validation", "API", "Per Pull Request", "Blocking"],
+    ["Core Regression", "UI End-to-End", "Nightly", "Advisory"],
+  ],
+  findings: [
+    "Two brittle tests were causing false negatives due to timing assumptions.",
+    "API schema drift was identified early in PR stage before merge.",
+    "Release gate became faster after flaky-test quarantine policy was applied.",
+  ],
+  impact: [
+    "Faster and more predictable regression feedback cycle.",
+    "Stronger release confidence with traceable test evidence.",
+    "Lower manual verification load during release windows.",
+  ],
+};
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+<DocFrame label="Live Artifact Preview" title={sample.project} meta="Structured QA sample • no file download required">
+    <section class="pt-4 pb-8">
+      <p class="text-[13px] md:text-[14px] font-mono uppercase tracking-[0.14em] text-[var(--foreground-muted)] mb-4">Live Sample</p>
+      <h1 class="text-[42px] md:text-[58px] font-serif leading-[0.95] tracking-[-0.03em] text-[var(--foreground-primary)] mb-4">{sample.project}</h1>
+      <p class="text-[15px] md:text-[17px] leading-[1.7] text-[var(--foreground-secondary)] max-w-[780px]">{sample.context}</p>
+    </section>
+
+    <section class="project-bento-card p-5 md:p-6 mb-4">
+      <p class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]"><span class="text-[var(--foreground-primary)] font-medium">Role:</span> {sample.role}</p>
+      <p class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)] mt-2"><span class="text-[var(--foreground-primary)] font-medium">Tools:</span> {sample.tools}</p>
+      <p class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)] mt-2"><span class="text-[var(--foreground-primary)] font-medium">Objective:</span> {sample.objective}</p>
+    </section>
+
+    <section class="project-bento-card p-5 md:p-6 mb-4">
+      <h2 class="text-[24px] md:text-[30px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Automation Strategy</h2>
+      <ul class="space-y-2">
+        {sample.strategy.map((item) => (
+          <li class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">• {item}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="project-bento-card p-5 md:p-6 mb-4">
+      <h2 class="text-[24px] md:text-[30px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Suite Matrix</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left border border-[var(--border-color)]">
+          <tbody>
+            {sample.suiteMatrix.map((row, i) => (
+              <tr class={i === 0 ? "bg-[rgba(0,0,0,0.03)] dark:bg-[rgba(255,255,255,0.08)]" : ""}>
+                {row.map((col) => (
+                  <td class={`border border-[var(--border-color)] px-3 py-2 text-[13px] md:text-[14px] ${i === 0 ? "font-medium text-[var(--foreground-primary)]" : "text-[var(--foreground-secondary)]"}`}>
+                    {col}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <article class="project-bento-card p-5 md:p-6">
+        <h2 class="text-[20px] md:text-[24px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Key Findings</h2>
+        <ul class="space-y-2">
+          {sample.findings.map((item) => (
+            <li class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">• {item}</li>
+          ))}
+        </ul>
+      </article>
+      <article class="project-bento-card p-5 md:p-6">
+        <h2 class="text-[20px] md:text-[24px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Impact</h2>
+        <ul class="space-y-2">
+          {sample.impact.map((item) => (
+            <li class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">• {item}</li>
+          ))}
+        </ul>
+      </article>
+    </section>
+
+    <section class="mt-12 border-t border-[var(--border-color)] pt-8">
+      <p class="text-[13px] md:text-[14px] text-[var(--foreground-secondary)]">
+        Need walkthrough and artifact structure breakdown?
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 text-[var(--foreground-primary)] ml-1">Let&apos;s connect</a>
+      </p>
+    </section>
+  </DocFrame>
+  </main>
+</BlogLayout>

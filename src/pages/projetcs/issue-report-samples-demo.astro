@@ -1,0 +1,392 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Issue Report Samples";
+const description =
+  "Manual QA issue report samples for B2B spare part e-commerce with reproducible steps, impact, and validation notes.";
+
+const latexSource = String.raw`
+\documentclass{article}
+\begin{document}
+
+\section*{ISSUE REPORT SAMPLES (SANITIZED)}
+\subsection*{Project: B2B Spare Part Marketplace (Indonesia Buyer - China Seller)}
+This document shows how critical and high issues are reported in a manual QA workflow so developers can reproduce fast and fix with clear priority.
+
+\subsection*{1. Document Info}
+\begin{tabular}{|l|l|}
+\hline
+Field & Value \\
+\hline
+Version & 1.1 \\
+Owner & Theodore - Software QA Engineer \\
+Date & March 2026 \\
+Type & Portfolio sample (sanitized, manual QA) \\
+Status & Ready for triage review \\
+\hline
+\end{tabular}
+
+\subsection*{2. Context}
+This platform serves Indonesian buyers and China sellers. Order quality risk is high because flow includes currency conversion, invoice checks, shipping handover, and multilingual UI.
+
+\subsection*{3. Reporting Goals}
+\begin{itemize}
+\item 1) Every issue is reproducible in less than 10 minutes.
+\item 2) Severity and business impact are clear for triage.
+\item 3) Evidence is enough for developer analysis without extra ping-pong.
+\item 4) Retest notes confirm fix result before release sign-off.
+\end{itemize}
+
+\subsection*{4. Severity and SLA Guide}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Severity & Business Impact & Response Target & Retest Target \\
+\hline
+Critical & Payment, order, or shipment cannot proceed & 2 hours & Same day \\
+High & Main flow works but with major risk & 1 business day & Next build \\
+Medium & Workaround available & 2 business days & Planned cycle \\
+Low & Cosmetic or minor copy issue & Backlog & Planned cycle \\
+\hline
+\end{tabular}
+
+\subsection*{5. Mandatory Report Fields}
+\begin{itemize}
+\item 1) Bug ID, title, severity, priority, and environment.
+\item 2) Preconditions and exact steps to reproduce.
+\item 3) Expected result and actual result.
+\item 4) Impact statement (user, business, and operational risk).
+\item 5) Evidence (screenshots, logs, payload, and SQL check if needed).
+\item 6) Validation notes after fix and retest status.
+\end{itemize}
+
+\subsection*{6. Critical Sample A}
+\subsection*{Title: Checkout Total Mismatch Between Cart and Invoice}
+\begin{tabular}{|l|l|}
+\hline
+Field & Value \\
+\hline
+Bug ID & BUG-B2B-241 \\
+Severity / Priority & Critical / P1 \\
+Environment & Staging 2026.03.20, Chrome 134, Buyer ID role \\
+Module & Cart, Checkout, Invoice \\
+\hline
+\end{tabular}
+
+\subsection*{Repro Steps}
+\begin{itemize}
+\item 1) Login as buyer and add 3 spare parts from China seller.
+\item 2) Apply seller discount and choose express shipping.
+\item 3) Continue checkout and open generated invoice page.
+\item 4) Compare cart total, checkout total, and invoice total.
+\end{itemize}
+
+\subsection*{Expected Result}
+Total amount is consistent on cart, checkout, and invoice.
+
+\subsection*{Actual Result}
+Invoice total is higher by IDR 12,500 after discount and shipping recalculation.
+
+\subsection*{Impact}
+Buyer sees inconsistent price and cannot trust invoice accuracy. Finance team receives manual correction requests.
+
+\subsection*{Validation Notes}
+Fix retested on build 2026.03.21-rc1 with 6 price combinations. Result: Passed.
+
+\subsection*{7. Critical Sample B}
+\subsection*{Title: Payment Confirmed but Order Status Stuck at Pending Payment}
+\begin{tabular}{|l|l|}
+\hline
+Field & Value \\
+\hline
+Bug ID & BUG-B2B-257 \\
+Severity / Priority & Critical / P1 \\
+Environment & Staging 2026.03.20, Safari 17, Buyer and Seller dashboard \\
+Module & Payment Confirmation, Order Status \\
+\hline
+\end{tabular}
+
+\subsection*{Repro Steps}
+\begin{itemize}
+\item 1) Complete order and upload payment proof.
+\item 2) Finance verifier marks payment as accepted.
+\item 3) Refresh buyer order history and seller order queue.
+\item 4) Check status in admin panel.
+\end{itemize}
+
+\subsection*{Expected Result}
+All panels change status to Paid and ready for shipment.
+
+\subsection*{Actual Result}
+Admin panel shows Paid, but buyer and seller panels remain Pending Payment.
+
+\subsection*{Impact}
+Shipment handover is blocked and seller misses dispatch SLA.
+
+\subsection*{Validation Notes}
+Retest on build 2026.03.22-rc2 with 5 orders. Status sync works across all panels. Result: Passed.
+
+\subsection*{8. High Sample C}
+\subsection*{Title: Indonesian Label on Tax Detail Is Misleading}
+\begin{tabular}{|l|l|}
+\hline
+Field & Value \\
+\hline
+Bug ID & BUG-B2B-266 \\
+Severity / Priority & High / P2 \\
+Environment & Staging 2026.03.20, Mobile web Chrome Android \\
+Module & Checkout Summary, Localization \\
+\hline
+\end{tabular}
+
+\subsection*{Repro Steps}
+\begin{itemize}
+\item 1) Open checkout in Indonesian language.
+\item 2) Select product with import tax.
+\item 3) Review tax line in order summary.
+\end{itemize}
+
+\subsection*{Expected Result}
+Label clearly explains import tax component.
+
+\subsection*{Actual Result}
+Label text implies optional fee, causing confusion in UAT.
+
+\subsection*{Impact}
+Buyer misunderstanding increases drop-off at payment step.
+
+\subsection*{Validation Notes}
+Copy updated and reviewed by product and legal. Retest passed on 2026.03.23.
+
+\subsection*{9. Defect Outcome Summary}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Bug ID & Severity & Fix Status & Retest Result \\
+\hline
+BUG-B2B-241 & Critical & Resolved & Passed \\
+BUG-B2B-257 & Critical & Resolved & Passed \\
+BUG-B2B-266 & High & Resolved & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{10. Impact in Numbers}
+\begin{itemize}
+\item 1) Average triage clarification round: 4 to 1 after template standardization.
+\item 2) Average developer reproduction time: 35 minutes to 11 minutes.
+\item 3) Reopened bug rate: 18 percent to 6 percent.
+\item 4) Release blockers resolved before UAT sign-off: 100 percent for this cycle.
+\end{itemize}
+
+\subsection*{11. QA Best Practices Applied}
+\begin{itemize}
+\item 1) Report only one core problem per ticket to avoid mixed root cause.
+\item 2) Use stable test data and mention exact account role.
+\item 3) Attach evidence in sequence: UI, API, DB (if needed).
+\item 4) Write impact in business language, not only technical language.
+\item 5) Always close with retest notes and tested build version.
+\end{itemize}
+
+\subsection*{12. Redaction Note}
+Simulation shared in compliance with NDA.
+
+\end{document}
+`;
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+    <DocFrame hideHeader={true} plainPage={true}>
+      <div id="latex-live-root" class="latex-live-root">
+        <p class="latex-loading">Loading document...</p>
+      </div>
+    </DocFrame>
+  </main>
+
+  <script is:inline define:vars={{ latexSource }}>
+    (function () {
+      var source = (latexSource || "").trim();
+      var root = document.getElementById("latex-live-root");
+
+      function decodeLatexText(text) {
+        return text
+          .replace(/\\&/g, "&")
+          .replace(/\\%/g, "%")
+          .replace(/\\_/g, "_")
+          .replace(/\\#/g, "#")
+          .replace(/\\\$/g, "$")
+          .replace(/\\\\/g, " ");
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cleanInline(text) {
+        return escapeHtml(decodeLatexText(text.trim()));
+      }
+
+      function parseSection(line, command) {
+        var prefix = "\\" + command + "*{";
+        if (!line.startsWith(prefix) || !line.endsWith("}")) return null;
+        return line.slice(prefix.length, -1);
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) return "";
+        var header = rows[0];
+        var body = rows.slice(1);
+        var thead =
+          "<thead><tr>" +
+          header
+            .map(function (cell) {
+              return "<th>" + cleanInline(cell) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        var tbody =
+          "<tbody>" +
+          body
+            .map(function (row) {
+              return (
+                "<tr>" +
+                row
+                  .map(function (cell) {
+                    return "<td>" + cleanInline(cell) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return '<div class="latex-table-container"><table>' + thead + tbody + "</table></div>";
+      }
+
+      function renderLatexSubset(input) {
+        var lines = input.split(/\r?\n/);
+        var chunks = [];
+        var paragraph = [];
+        var i = 0;
+
+        function flushParagraph() {
+          if (!paragraph.length) return;
+          var text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+          if (text) chunks.push("<p>" + cleanInline(text) + "</p>");
+          paragraph = [];
+        }
+
+        while (i < lines.length) {
+          var line = lines[i].trim();
+          if (
+            !line ||
+            line.startsWith("\\documentclass") ||
+            line === "\\begin{document}" ||
+            line === "\\end{document}"
+          ) {
+            flushParagraph();
+            i += 1;
+            continue;
+          }
+
+          var sectionTitle = parseSection(line, "section");
+          if (sectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h2>" + cleanInline(sectionTitle) + "</h2>");
+            i += 1;
+            continue;
+          }
+
+          var subsectionTitle = parseSection(line, "subsection");
+          if (subsectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h3>" + cleanInline(subsectionTitle) + "</h3>");
+            i += 1;
+            continue;
+          }
+
+          if (line === "\\begin{itemize}") {
+            flushParagraph();
+            var items = [];
+            i += 1;
+            while (i < lines.length) {
+              var itemLine = lines[i].trim();
+              if (itemLine === "\\end{itemize}") break;
+              if (itemLine.startsWith("\\item")) {
+                items.push(itemLine.replace(/^\\item\s*/, ""));
+              }
+              i += 1;
+            }
+            chunks.push(
+              "<ul>" +
+                items
+                  .map(function (item) {
+                    return "<li>" + cleanInline(item) + "</li>";
+                  })
+                  .join("") +
+                "</ul>"
+            );
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\begin{tabular}")) {
+            flushParagraph();
+            var rows = [];
+            i += 1;
+            while (i < lines.length) {
+              var raw = lines[i].trim();
+              if (raw === "\\end{tabular}") break;
+              if (!raw || raw === "\\hline") {
+                i += 1;
+                continue;
+              }
+              var normalized = raw.replace(/\\\\$/, "").trim();
+              var cells = normalized.split("&").map(function (cell) {
+                return cell.trim();
+              });
+              rows.push(cells);
+              i += 1;
+            }
+            chunks.push(renderTable(rows));
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\")) {
+            i += 1;
+            continue;
+          }
+
+          paragraph.push(line.replace(/\\\\$/, "").trim());
+          i += 1;
+        }
+
+        flushParagraph();
+        return chunks.join("");
+      }
+
+      try {
+        if (!root) return;
+        root.innerHTML = '<article class="latex-doc">' + renderLatexSubset(source) + "</article>";
+      } catch (error) {
+        if (root) {
+          root.innerHTML = '<p class="latex-loading">Render fallback active. Please refresh the page.</p>';
+        }
+      }
+    })();
+  </script>
+</BlogLayout>

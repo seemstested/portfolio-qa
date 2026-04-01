@@ -1,0 +1,309 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Test Cases";
+const description =
+  "Manual QA test case pack in spreadsheet-style format with preconditions, steps, expected results, and priority.";
+
+const latexSource = String.raw`
+\documentclass{article}
+\begin{document}
+
+\section*{TEST CASE PACK (SANITIZED)}
+\subsection*{Project: QA Sandbox - B2B Spare Part Marketplace (Testing Purpose)}
+
+\subsection*{1. Test Case Header}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Field & Value & Field & Value \\
+\hline
+Project Name & QA Sandbox B2B Spare Parts & Test Case Author & Theodore \\
+Priority & High & Test Case Reviewer & QA Lead \\
+Description & Manual functional validation of buyer and seller core flow & Test Case Version & 1.0 \\
+Test Objective & Validate critical user flow before UAT and release sign-off & Test Execution Date & March 2026 \\
+\hline
+\end{tabular}
+
+\subsection*{2. Preconditions}
+\begin{itemize}
+\item 1) Staging environment is stable and accessible.
+\item 2) Buyer Indonesia account and Seller China account are active.
+\item 3) Product data, shipping data, and tax data are seeded.
+\item 4) Finance verifier role is available for payment checks.
+\item 5) Test order IDs are sanitized and isolated from production.
+\end{itemize}
+
+\subsection*{3. Test Environment}
+\begin{tabular}{|l|l|}
+\hline
+Area & Setup \\
+\hline
+Web Browser & Chrome 134, Safari 17 \\
+Mobile Browser & Android Chrome \\
+Backend & Staging build 2026.03.25-rc1 \\
+Database Validation & SQL read-only checks \\
+Documentation & Jira and TestRail \\
+\hline
+\end{tabular}
+
+\subsection*{4. Test Case Matrix}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+Test Case ID & Test Steps & Input Data & Expected Results & Actual Results & Test Environment & Execution Status & Bug Severity & Bug Priority & Notes \\
+\hline
+TC-B2B-001 & Login buyer and open product list & Buyer ID role & Product list and prices load correctly & Same as expected & Chrome 134 Staging & Pass & - & - & Smoke \\
+TC-B2B-002 & Add item and update quantity in cart & SKU SP-1001 qty 3 & Subtotal updates correctly & Same as expected & Chrome 134 Staging & Pass & - & - & Core flow \\
+TC-B2B-003 & Checkout using IDR with express shipping & IDR and Jakarta address & Total includes item shipping and tax & Tax line not loaded & Chrome 134 Staging & Fail & High & P2 & BUG-B2B-301 \\
+TC-B2B-004 & Upload payment proof and refresh order page & Order ORD-2026-0198 & Status changes to Waiting Verification & Still Pending Payment & Safari 17 Staging & Fail & Critical & P1 & BUG-B2B-302 \\
+TC-B2B-005 & Verify payment as finance role & Finance verifier account & Status changes to Paid in admin panel & Same as expected & Chrome 134 Staging & Pass & - & - & Payment check \\
+TC-B2B-006 & Open seller queue after payment verified & Seller CN role & Order appears in Ready to Ship queue & Same as expected & Chrome 134 Staging & Pass & - & - & Seller flow \\
+TC-B2B-007 & Check bilingual invoice label and amount & Language ID and EN & Tax and shipping labels are clear & Same as expected after fix & Android Chrome Staging & Pass & - & - & Retest rc2 \\
+TC-B2B-008 & Buyer tracks shipment status timeline & Order ORD-2026-0198 & Timeline status updates in sequence & Same as expected & Chrome 134 Staging & Pass & - & - & End to end \\
+\hline
+\end{tabular}
+
+\subsection*{5. Defect Reference}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Bug ID & Linked Test Case & Root Cause Summary & Fix Status & Retest \\
+\hline
+BUG-B2B-301 & TC-B2B-003 & Tax mapping config not loaded for express lane & Resolved & Passed \\
+BUG-B2B-302 & TC-B2B-004 & Order status sync worker delayed update & Resolved & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{6. Execution Summary}
+\begin{itemize}
+\item 1) Total test cases: 8
+\item 2) Executed: 8
+\item 3) Pass: 6
+\item 4) Fail: 2
+\item 5) Critical defects: 1 (resolved and retested)
+\item 6) High defects: 1 (resolved and retested)
+\item 7) Final decision: Ready for UAT handover
+\end{itemize}
+
+\subsection*{7. Redaction Note}
+Simulation shared in compliance with NDA.
+
+\end{document}
+`;
+---
+
+<BlogLayout title={title} description={description}>
+  <header
+    class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center"
+  >
+    <a
+      href="/"
+      class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
+    >
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal"
+        >Portfolio</span
+      >
+    </a>
+    <a
+      href="/"
+      class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+    >
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+    <DocFrame hideHeader={true} plainPage={true}>
+      <div id="latex-live-root" class="latex-live-root">
+        <p class="latex-loading">Loading document...</p>
+      </div>
+    </DocFrame>
+  </main>
+
+  <script is:inline define:vars={{ latexSource }}>
+    (function () {
+      var source = (latexSource || "").trim();
+      var root = document.getElementById("latex-live-root");
+
+      function decodeLatexText(text) {
+        return text
+          .replace(/\\&/g, "&")
+          .replace(/\\%/g, "%")
+          .replace(/\\_/g, "_")
+          .replace(/\\#/g, "#")
+          .replace(/\\\$/g, "$")
+          .replace(/\\\\/g, " ");
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cleanInline(text) {
+        return escapeHtml(decodeLatexText(text.trim()));
+      }
+
+      function parseSection(line, command) {
+        var prefix = "\\" + command + "*{";
+        if (!line.startsWith(prefix) || !line.endsWith("}")) return null;
+        return line.slice(prefix.length, -1);
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) return "";
+        var header = rows[0];
+        var body = rows.slice(1);
+        var thead =
+          "<thead><tr>" +
+          header
+            .map(function (cell) {
+              return "<th>" + cleanInline(cell) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        var tbody =
+          "<tbody>" +
+          body
+            .map(function (row) {
+              return (
+                "<tr>" +
+                row
+                  .map(function (cell) {
+                    return "<td>" + cleanInline(cell) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return (
+          '<div class="latex-table-container"><table>' +
+          thead +
+          tbody +
+          "</table></div>"
+        );
+      }
+
+      function renderLatexSubset(input) {
+        var lines = input.split(/\r?\n/);
+        var chunks = [];
+        var paragraph = [];
+        var i = 0;
+
+        function flushParagraph() {
+          if (!paragraph.length) return;
+          var text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+          if (text) chunks.push("<p>" + cleanInline(text) + "</p>");
+          paragraph = [];
+        }
+
+        while (i < lines.length) {
+          var line = lines[i].trim();
+          if (
+            !line ||
+            line.startsWith("\\documentclass") ||
+            line === "\\begin{document}" ||
+            line === "\\end{document}"
+          ) {
+            flushParagraph();
+            i += 1;
+            continue;
+          }
+
+          var sectionTitle = parseSection(line, "section");
+          if (sectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h2>" + cleanInline(sectionTitle) + "</h2>");
+            i += 1;
+            continue;
+          }
+
+          var subsectionTitle = parseSection(line, "subsection");
+          if (subsectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h3>" + cleanInline(subsectionTitle) + "</h3>");
+            i += 1;
+            continue;
+          }
+
+          if (line === "\\begin{itemize}") {
+            flushParagraph();
+            var items = [];
+            i += 1;
+            while (i < lines.length) {
+              var itemLine = lines[i].trim();
+              if (itemLine === "\\end{itemize}") break;
+              if (itemLine.startsWith("\\item")) {
+                items.push(itemLine.replace(/^\\item\s*/, ""));
+              }
+              i += 1;
+            }
+            chunks.push(
+              "<ul>" +
+                items
+                  .map(function (item) {
+                    return "<li>" + cleanInline(item) + "</li>";
+                  })
+                  .join("") +
+                "</ul>"
+            );
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\begin{tabular}")) {
+            flushParagraph();
+            var rows = [];
+            i += 1;
+            while (i < lines.length) {
+              var raw = lines[i].trim();
+              if (raw === "\\end{tabular}") break;
+              if (!raw || raw === "\\hline") {
+                i += 1;
+                continue;
+              }
+              var normalized = raw.replace(/\\\\$/, "").trim();
+              var cells = normalized.split("&").map(function (cell) {
+                return cell.trim();
+              });
+              rows.push(cells);
+              i += 1;
+            }
+            chunks.push(renderTable(rows));
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\")) {
+            i += 1;
+            continue;
+          }
+
+          paragraph.push(line.replace(/\\\\$/, "").trim());
+          i += 1;
+        }
+
+        flushParagraph();
+        return chunks.join("");
+      }
+
+      try {
+        if (!root) return;
+        root.innerHTML =
+          '<article class="latex-doc testcases-doc">' +
+          renderLatexSubset(source) +
+          "</article>";
+      } catch (error) {
+        if (root) {
+          root.innerHTML =
+            '<p class="latex-loading">Render fallback active. Please refresh the page.</p>';
+        }
+      }
+    })();
+  </script>
+</BlogLayout>

@@ -1,0 +1,359 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Quality Assurance Case Studies";
+const description =
+  "Manual QA case study for a B2B spare part e-commerce platform with sanitized artifact content.";
+
+const latexSource = String.raw`
+\documentclass{article}
+\begin{document}
+
+\section*{QA CASE STUDY (SANITIZED)}
+\subsection*{Project: B2B Spare Part Marketplace (Indonesia Buyer - China Seller)}
+This project is a cross-border B2B e-commerce platform for spare parts. Buyers are in Indonesia, sellers are in China, with multi-currency price flow and shipping process from China to Indonesia.
+
+\subsection*{1. Document Info}
+\begin{tabular}{|l|l|}
+\hline
+Field & Value \\
+\hline
+Version & 1.3 \\
+Status & Ready for release review \\
+Owner & Theodore - Software QA Engineer \\
+Date & March 2026 \\
+Type & Portfolio sample (sanitized, manual QA) \\
+\hline
+\end{tabular}
+
+\subsection*{2. Business Context}
+The platform handles product search, quotation, checkout, payment confirmation, shipping updates, and order tracking. Because buyer and seller are in different countries, risk is high in currency conversion, language clarity, tax display, and order status consistency.
+
+\subsection*{3. Quality Goals}
+\begin{itemize}
+\item 1) Critical path works end to end: search to order received.
+\item 2) Price and total shown correctly in all supported currencies.
+\item 3) Order status is consistent for buyer, seller, and admin.
+\item 4) No open Critical and High bug before release.
+\end{itemize}
+
+\subsection*{4. Main Risks}
+\begin{itemize}
+\item 1) Currency conversion and rounding mismatch at checkout.
+\item 2) Wrong language text causes misunderstanding in order flow.
+\item 3) Shipping cost and tax display are not aligned between pages.
+\item 4) Order status update delay creates buyer-seller confusion.
+\item 5) Manual payment confirmation is linked to wrong order.
+\end{itemize}
+
+\subsection*{5. Scope}
+\begin{tabular}{|l|l|}
+\hline
+In Scope & Out of Scope \\
+\hline
+Product search, PDP, cart, checkout & Marketing page and CMS \\
+Payment confirmation and invoice checks & Legacy archived orders \\
+Shipping options and order tracking & Seller backoffice analytics page \\
+Multi-language label validation & Old mobile app version \\
+\hline
+\end{tabular}
+
+\subsection*{6. Manual Test Tools}
+\begin{tabular}{|l|l|}
+\hline
+Area & Setup \\
+\hline
+Test management & TestRail and Google Sheets \\
+Bug tracking & Jira \\
+API checking (manual) & Postman collection (manual run only) \\
+Database validation & DBeaver SQL read-only checks \\
+UI validation & Browser DevTools and screen recording \\
+Communication & Slack and release meeting notes \\
+\hline
+\end{tabular}
+
+\subsection*{7. Test Data Strategy}
+\begin{itemize}
+\item 1) Seller country: China, buyer country: Indonesia.
+\item 2) Currencies: IDR, USD, CNY with valid and edge values.
+\item 3) Shipping lanes: regular and express with different tax rules.
+\item 4) User roles: buyer, seller, admin, finance verifier.
+\item 5) Product types: normal, bulky, and restricted spare parts.
+\end{itemize}
+
+\subsection*{8. Entry Criteria}
+\begin{itemize}
+\item 1) Requirements and acceptance criteria are approved.
+\item 2) Build is stable and deployable in staging.
+\item 3) Test data is complete for buyer and seller scenarios.
+\item 4) Test cases are reviewed by QA lead and product owner.
+\end{itemize}
+
+\subsection*{9. Exit Criteria}
+\begin{itemize}
+\item 1) 100 percent execution for P0 and P1 test cases.
+\item 2) Open Critical = 0 and High = 0.
+\item 3) Medium bug has workaround or clear acceptance note.
+\item 4) Release sign-off approved by QA, Product, and Engineering.
+\end{itemize}
+
+\subsection*{10. Manual Test Execution Plan}
+\begin{itemize}
+\item 1) Day 1: smoke test and high-risk flow validation.
+\item 2) Day 2-3: full functional test for buyer and seller journeys.
+\item 3) Day 4: integration checks for payment, shipping, and invoice.
+\item 4) Day 5: full regression and UAT support.
+\item 5) Daily defect triage with dev and product team.
+\end{itemize}
+
+\subsection*{11. Traceability Sample}
+\begin{tabular}{|l|l|l|l|}
+\hline
+AC ID & Test IDs & Evidence & Status \\
+\hline
+AC-11 & TC-001, TC-002 & Checkout screenshots and order record & Passed \\
+AC-18 & TC-045, TC-046 & Shipping fee sheet and UI capture & Passed \\
+AC-24 & TC-071, TC-072 & Invoice PDF and DB tax field check & Passed \\
+AC-30 & TC-099, TC-100 & Bilingual label validation notes & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{12. Defect Summary}
+\begin{tabular}{|l|l|l|}
+\hline
+Severity & Count & Status \\
+\hline
+Critical & 2 & Resolved before release \\
+High & 5 & Resolved before release \\
+Medium & 9 & 7 resolved, 2 accepted with note \\
+Low & 11 & Deferred for next sprint \\
+\hline
+\end{tabular}
+
+\subsection*{13. Results in Numbers}
+\begin{itemize}
+\item 1) Total manual test cases: 214
+\item 2) Executed: 214
+\item 3) Passed: 198
+\item 4) Failed: 16 (all retested after fix)
+\item 5) Defects found: 27
+\item 6) Defect fix verification cycle: 3 rounds
+\item 7) UAT blocker at handover: 0
+\end{itemize}
+
+\subsection*{14. Release Decision}
+Decision: GO. All Critical and High defects are closed, manual regression is complete, and UAT key scenarios are passed.
+
+\subsection*{15. Post-Release Monitoring Plan (72 Hours)}
+\begin{itemize}
+\item 1) Check payment and shipping complaint tickets every 4 hours.
+\item 2) Validate 20 random real orders per day for status consistency.
+\item 3) Track language misunderstanding reports from customer support.
+\item 4) Run focused manual regression if urgent fix is deployed.
+\end{itemize}
+
+\subsection*{16. Redaction Note}
+Simulation shared in compliance with NDA.
+
+\end{document}
+`;
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+    <DocFrame hideHeader={true} plainPage={true}>
+      <div id="latex-live-root" class="latex-live-root">
+        <p class="latex-loading">Loading document...</p>
+      </div>
+    </DocFrame>
+  </main>
+
+  <script is:inline define:vars={{ latexSource }}>
+    (function () {
+      var source = (latexSource || "").trim();
+      var root = document.getElementById("latex-live-root");
+
+      function decodeLatexText(text) {
+        return text
+          .replace(/\\&/g, "&")
+          .replace(/\\%/g, "%")
+          .replace(/\\_/g, "_")
+          .replace(/\\#/g, "#")
+          .replace(/\\\$/g, "$")
+          .replace(/\\\\/g, " ");
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cleanInline(text) {
+        return escapeHtml(decodeLatexText(text.trim()));
+      }
+
+      function parseSection(line, command) {
+        var prefix = "\\" + command + "*{";
+        if (!line.startsWith(prefix) || !line.endsWith("}")) return null;
+        return line.slice(prefix.length, -1);
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) return "";
+        var header = rows[0];
+        var body = rows.slice(1);
+        var thead =
+          "<thead><tr>" +
+          header
+            .map(function (cell) {
+              return "<th>" + cleanInline(cell) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        var tbody =
+          "<tbody>" +
+          body
+            .map(function (row) {
+              return (
+                "<tr>" +
+                row
+                  .map(function (cell) {
+                    return "<td>" + cleanInline(cell) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return '<div class="latex-table-container"><table>' + thead + tbody + "</table></div>";
+      }
+
+      function renderLatexSubset(input) {
+        var lines = input.split(/\r?\n/);
+        var chunks = [];
+        var paragraph = [];
+        var i = 0;
+
+        function flushParagraph() {
+          if (!paragraph.length) return;
+          var text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+          if (text) chunks.push("<p>" + cleanInline(text) + "</p>");
+          paragraph = [];
+        }
+
+        while (i < lines.length) {
+          var line = lines[i].trim();
+          if (
+            !line ||
+            line.startsWith("\\documentclass") ||
+            line === "\\begin{document}" ||
+            line === "\\end{document}"
+          ) {
+            flushParagraph();
+            i += 1;
+            continue;
+          }
+
+          var sectionTitle = parseSection(line, "section");
+          if (sectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h2>" + cleanInline(sectionTitle) + "</h2>");
+            i += 1;
+            continue;
+          }
+
+          var subsectionTitle = parseSection(line, "subsection");
+          if (subsectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h3>" + cleanInline(subsectionTitle) + "</h3>");
+            i += 1;
+            continue;
+          }
+
+          if (line === "\\begin{itemize}") {
+            flushParagraph();
+            var items = [];
+            i += 1;
+            while (i < lines.length) {
+              var itemLine = lines[i].trim();
+              if (itemLine === "\\end{itemize}") break;
+              if (itemLine.startsWith("\\item")) {
+                items.push(itemLine.replace(/^\\item\s*/, ""));
+              }
+              i += 1;
+            }
+            chunks.push(
+              "<ul>" +
+                items
+                  .map(function (item) {
+                    return "<li>" + cleanInline(item) + "</li>";
+                  })
+                  .join("") +
+                "</ul>"
+            );
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\begin{tabular}")) {
+            flushParagraph();
+            var rows = [];
+            i += 1;
+            while (i < lines.length) {
+              var raw = lines[i].trim();
+              if (raw === "\\end{tabular}") break;
+              if (!raw || raw === "\\hline") {
+                i += 1;
+                continue;
+              }
+              var normalized = raw.replace(/\\\\$/, "").trim();
+              var cells = normalized.split("&").map(function (cell) {
+                return cell.trim();
+              });
+              rows.push(cells);
+              i += 1;
+            }
+            chunks.push(renderTable(rows));
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\")) {
+            i += 1;
+            continue;
+          }
+
+          paragraph.push(line.replace(/\\\\$/, "").trim());
+          i += 1;
+        }
+
+        flushParagraph();
+        return chunks.join("");
+      }
+
+      try {
+        if (!root) return;
+        root.innerHTML = '<article class="latex-doc">' + renderLatexSubset(source) + "</article>";
+      } catch (error) {
+        if (root) {
+          root.innerHTML = '<p class="latex-loading">Render fallback active. Please refresh the page.</p>';
+        }
+      }
+    })();
+  </script>
+</BlogLayout>

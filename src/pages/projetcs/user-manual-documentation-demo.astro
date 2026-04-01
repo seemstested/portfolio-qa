@@ -1,0 +1,395 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "User Manual Documentation";
+const description =
+  "End-to-end operational user manual sample for a B2B spare part marketplace.";
+
+const latexSource = String.raw`
+\documentclass{article}
+\begin{document}
+
+\section*{USER MANUAL (SANITIZED)}
+\subsection*{Project: QA Sandbox - B2B Spare Part Marketplace (Indonesia Buyer - China Seller)}
+This manual explains how each role uses the system end to end in daily operations.
+
+\subsection*{1. Document Control}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Field & Value & Field & Value \\
+\hline
+Document ID & UM-B2B-001 & Version & 1.0 \\
+Owner & Theodore (Software QA) & Reviewed By & Product and Ops Lead \\
+Status & Approved for internal use & Date & March 2026 \\
+\hline
+\end{tabular}
+
+\subsection*{2. Purpose and Scope}
+\begin{itemize}
+\item 1) Help users run daily flow without confusion.
+\item 2) Standardize operational steps for buyer, seller, finance, and admin.
+\item 3) Reduce support tickets caused by process misunderstanding.
+\item 4) Provide a single reference for handover and onboarding.
+\end{itemize}
+
+\subsection*{3. User Roles}
+\begin{tabular}{|l|l|l|}
+\hline
+Role & Main Responsibility & Access Level \\
+\hline
+Buyer (Indonesia) & Search, order, payment proof, tracking & Buyer portal \\
+Seller (China) & Confirm order, prepare shipment, update dispatch & Seller portal \\
+Finance Verifier & Validate payment proof and mark payment status & Finance panel \\
+Admin Ops & Monitor flow, resolve status mismatch, user support & Admin panel \\
+\hline
+\end{tabular}
+
+\subsection*{4. System Requirements}
+\begin{itemize}
+\item 1) Browser: Chrome latest or Safari latest.
+\item 2) Stable internet connection.
+\item 3) Active role-based account.
+\item 4) Access to email or phone for OTP verification.
+\end{itemize}
+
+\subsection*{5. Access and Login Guide}
+\begin{itemize}
+\item 1) Open portal URL and choose role (Buyer, Seller, Finance, Admin).
+\item 2) Input registered email and password.
+\item 3) Complete OTP verification.
+\item 4) If login fails 3 times, use Forgot Password flow.
+\item 5) Contact admin if account is locked for more than 15 minutes.
+\end{itemize}
+
+\subsection*{6. Buyer End-to-End Flow}
+\subsection*{6.1 Search and Product Detail}
+\begin{itemize}
+\item 1) Use search bar by part name, SKU, or vehicle model.
+\item 2) Apply filters (category, brand, price range, lead time).
+\item 3) Open product detail page and review stock, MOQ, and notes.
+\end{itemize}
+
+\subsection*{6.2 Cart and Checkout}
+\begin{itemize}
+\item 1) Add item to cart and set quantity.
+\item 2) Review subtotal, shipping option, and tax component.
+\item 3) Confirm delivery address and contact person.
+\item 4) Submit order and review generated order number.
+\end{itemize}
+
+\subsection*{6.3 Payment Submission}
+\begin{itemize}
+\item 1) Open order detail and click Upload Payment Proof.
+\item 2) Upload valid transfer screenshot or document.
+\item 3) Add payment note if needed.
+\item 4) Submit and wait for finance verification.
+\end{itemize}
+
+\subsection*{6.4 Order Tracking}
+\begin{itemize}
+\item 1) Open My Orders and choose order number.
+\item 2) Track status timeline: Pending Payment, Paid, Ready to Ship, In Transit, Delivered.
+\item 3) If status does not move in SLA window, open support ticket.
+\end{itemize}
+
+\subsection*{7. Seller End-to-End Flow}
+\begin{itemize}
+\item 1) Login to seller portal and open New Paid Orders queue.
+\item 2) Check item list, shipping detail, and packing instruction.
+\item 3) Prepare shipment and add tracking number.
+\item 4) Update status to Ready to Ship then In Transit.
+\item 5) Upload shipment proof if required by operations team.
+\end{itemize}
+
+\subsection*{8. Finance Verification Flow}
+\begin{itemize}
+\item 1) Open Finance panel and go to Payment Verification queue.
+\item 2) Match payment proof with invoice amount and order number.
+\item 3) Mark status as Accepted or Rejected.
+\item 4) Add reason note for rejected payment.
+\item 5) Ensure status sync is visible in buyer and seller panels.
+\end{itemize}
+
+\subsection*{9. Admin Operations Flow}
+\begin{itemize}
+\item 1) Monitor order status consistency across all panels.
+\item 2) Handle user ticket for order mismatch or shipment delay.
+\item 3) Escalate critical issue to engineering with bug template.
+\item 4) Log incident and close only after user confirmation.
+\end{itemize}
+
+\subsection*{10. Order Status Reference}
+\begin{tabular}{|l|l|l|}
+\hline
+Status & Meaning & Action Owner \\
+\hline
+Pending Payment & Order created, waiting payment proof & Buyer \\
+Waiting Verification & Payment proof submitted & Finance \\
+Paid & Payment accepted and valid & Finance \\
+Ready to Ship & Seller prepared item for handover & Seller \\
+In Transit & Shipment has started & Seller and Logistics \\
+Delivered & Order received by buyer & Buyer \\
+Completed & Order closed successfully & System \\
+\hline
+\end{tabular}
+
+\subsection*{11. SLA Reference}
+\begin{tabular}{|l|l|l|}
+\hline
+Process & Target SLA & Escalation Rule \\
+\hline
+Payment verification & 2 hours business time & Escalate to finance lead after SLA breach \\
+Status sync update & 15 minutes & Escalate to engineering support \\
+Seller dispatch update & 24 hours after paid & Escalate to seller ops coordinator \\
+Support first response & 30 minutes & Escalate to admin manager \\
+\hline
+\end{tabular}
+
+\subsection*{12. Troubleshooting Guide}
+\begin{tabular}{|l|l|l|}
+\hline
+Issue & Possible Cause & Resolution \\
+\hline
+Cannot login & Wrong password or locked account & Reset password and retry after lock period \\
+Payment proof upload failed & File too large or unstable internet & Compress file and retry with stable network \\
+Status not updated & Sync queue delay & Refresh page, then report to admin if still stale \\
+Wrong tax display & Locale cache issue & Clear cache and re-open checkout \\
+Tracking not visible & Seller has not submitted tracking number & Contact seller via support channel \\
+\hline
+\end{tabular}
+
+\subsection*{13. Support Workflow}
+\begin{itemize}
+\item 1) Create ticket with order number and clear issue summary.
+\item 2) Add screenshot and timestamp.
+\item 3) Select category: Payment, Shipping, Status, Account, Other.
+\item 4) Support team responds and provides ETA.
+\item 5) User confirms issue solved before ticket closure.
+\end{itemize}
+
+\subsection*{14. FAQ}
+\begin{itemize}
+\item Q1: Why is my order still pending after payment upload?
+  A1: Finance verification may still be in queue. Check within 2 hours SLA.
+\item Q2: Can seller change shipping method after payment?
+  A2: Only before dispatch. After dispatch, shipping method cannot be changed.
+\item Q3: What if invoice amount is different from checkout amount?
+  A3: Stop payment and report ticket immediately with screenshots.
+\item Q4: How do I correct wrong delivery address?
+  A4: Address can be edited only before payment is verified.
+\end{itemize}
+
+\subsection*{15. Operational Checklist}
+\begin{itemize}
+\item 1) Verify no pending critical ticket before shift close.
+\item 2) Verify payment queue is below SLA threshold.
+\item 3) Verify seller dispatch backlog is monitored.
+\item 4) Verify random order sample for status consistency.
+\item 5) Submit daily ops summary to team channel.
+\end{itemize}
+
+\subsection*{16. Redaction Note}
+Simulation shared in compliance with NDA.
+
+\end{document}
+`;
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+    <DocFrame hideHeader={true} plainPage={true}>
+      <div id="latex-live-root" class="latex-live-root">
+        <p class="latex-loading">Loading document...</p>
+      </div>
+    </DocFrame>
+  </main>
+
+  <script is:inline define:vars={{ latexSource }}>
+    (function () {
+      var source = (latexSource || "").trim();
+      var root = document.getElementById("latex-live-root");
+
+      function decodeLatexText(text) {
+        return text
+          .replace(/\\&/g, "&")
+          .replace(/\\%/g, "%")
+          .replace(/\\_/g, "_")
+          .replace(/\\#/g, "#")
+          .replace(/\\\$/g, "$")
+          .replace(/\\\\/g, " ");
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cleanInline(text) {
+        return escapeHtml(decodeLatexText(text.trim()));
+      }
+
+      function parseSection(line, command) {
+        var prefix = "\\" + command + "*{";
+        if (!line.startsWith(prefix) || !line.endsWith("}")) return null;
+        return line.slice(prefix.length, -1);
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) return "";
+        var header = rows[0];
+        var body = rows.slice(1);
+        var thead =
+          "<thead><tr>" +
+          header
+            .map(function (cell) {
+              return "<th>" + cleanInline(cell) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        var tbody =
+          "<tbody>" +
+          body
+            .map(function (row) {
+              return (
+                "<tr>" +
+                row
+                  .map(function (cell) {
+                    return "<td>" + cleanInline(cell) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return '<div class="latex-table-container"><table>' + thead + tbody + "</table></div>";
+      }
+
+      function renderLatexSubset(input) {
+        var lines = input.split(/\r?\n/);
+        var chunks = [];
+        var paragraph = [];
+        var i = 0;
+
+        function flushParagraph() {
+          if (!paragraph.length) return;
+          var text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+          if (text) chunks.push("<p>" + cleanInline(text) + "</p>");
+          paragraph = [];
+        }
+
+        while (i < lines.length) {
+          var line = lines[i].trim();
+          if (
+            !line ||
+            line.startsWith("\\documentclass") ||
+            line === "\\begin{document}" ||
+            line === "\\end{document}"
+          ) {
+            flushParagraph();
+            i += 1;
+            continue;
+          }
+
+          var sectionTitle = parseSection(line, "section");
+          if (sectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h2>" + cleanInline(sectionTitle) + "</h2>");
+            i += 1;
+            continue;
+          }
+
+          var subsectionTitle = parseSection(line, "subsection");
+          if (subsectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h3>" + cleanInline(subsectionTitle) + "</h3>");
+            i += 1;
+            continue;
+          }
+
+          if (line === "\\begin{itemize}") {
+            flushParagraph();
+            var items = [];
+            i += 1;
+            while (i < lines.length) {
+              var itemLine = lines[i].trim();
+              if (itemLine === "\\end{itemize}") break;
+              if (itemLine.startsWith("\\item")) {
+                items.push(itemLine.replace(/^\\item\s*/, ""));
+              }
+              i += 1;
+            }
+            chunks.push(
+              "<ul>" +
+                items
+                  .map(function (item) {
+                    return "<li>" + cleanInline(item) + "</li>";
+                  })
+                  .join("") +
+                "</ul>"
+            );
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\begin{tabular}")) {
+            flushParagraph();
+            var rows = [];
+            i += 1;
+            while (i < lines.length) {
+              var raw = lines[i].trim();
+              if (raw === "\\end{tabular}") break;
+              if (!raw || raw === "\\hline") {
+                i += 1;
+                continue;
+              }
+              var normalized = raw.replace(/\\\\$/, "").trim();
+              var cells = normalized.split("&").map(function (cell) {
+                return cell.trim();
+              });
+              rows.push(cells);
+              i += 1;
+            }
+            chunks.push(renderTable(rows));
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\")) {
+            i += 1;
+            continue;
+          }
+
+          paragraph.push(line.replace(/\\\\$/, "").trim());
+          i += 1;
+        }
+
+        flushParagraph();
+        return chunks.join("");
+      }
+
+      try {
+        if (!root) return;
+        root.innerHTML = '<article class="latex-doc">' + renderLatexSubset(source) + "</article>";
+      } catch (error) {
+        if (root) {
+          root.innerHTML = '<p class="latex-loading">Render fallback active. Please refresh the page.</p>';
+        }
+      }
+    })();
+  </script>
+</BlogLayout>

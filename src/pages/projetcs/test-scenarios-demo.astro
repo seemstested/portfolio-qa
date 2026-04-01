@@ -1,0 +1,302 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Test Scenarios";
+const description =
+  "Manual QA scenario pack in spreadsheet-style format for critical user journeys and edge conditions.";
+
+const latexSource = String.raw`
+\documentclass{article}
+\begin{document}
+
+\section*{TEST SCENARIO PACK (SANITIZED)}
+\subsection*{Project: QA Sandbox - B2B Spare Part Marketplace (Testing Purpose)}
+
+\subsection*{1. Document Info}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Field & Value & Field & Value \\
+\hline
+Project Name & QA Sandbox B2B Spare Parts & Scenario Author & Theodore \\
+Scope Focus & Critical journey and edge condition & Scenario Reviewer & QA Lead \\
+Version & 1.0 & Execution Window & March 2026 \\
+Objective & Validate end-to-end behavior before UAT & Status & Ready for execution \\
+\hline
+\end{tabular}
+
+\subsection*{2. Scope and Goal}
+\begin{itemize}
+\item 1) Validate end-to-end order flow from product search until shipment tracking.
+\item 2) Validate cross-border complexity: currency, language, tax, and shipping status.
+\item 3) Validate negative paths and user mistake scenarios.
+\item 4) Validate operational handover between buyer, seller, and finance role.
+\end{itemize}
+
+\subsection*{3. Preconditions}
+\begin{itemize}
+\item 1) Staging build 2026.03.25-rc1 is deployed and stable.
+\item 2) Buyer Indonesia, Seller China, and Finance accounts are available.
+\item 3) Test products, shipping lanes, and tax configurations are seeded.
+\item 4) Scenario IDs and order IDs are sanitized.
+\end{itemize}
+
+\subsection*{4. Scenario Matrix}
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+Scenario ID & Journey Stage & Scenario Description & Test Data & Expected Outcome & Priority & Status \\
+\hline
+SCN-B2B-001 & Browse and Cart & Buyer can find spare part and add multiple items into cart & SKU mix from one seller & Cart subtotal and quantity update correctly & High & Passed \\
+SCN-B2B-002 & Checkout & Buyer can complete checkout with IDR and express shipping & Jakarta address and IDR payment & Total amount includes shipping and tax correctly & High & Passed \\
+SCN-B2B-003 & Payment Proof & Buyer uploads payment proof and finance verifies transaction & Valid payment proof image & Order status moves to Paid in all panels & Critical & Failed then passed \\
+SCN-B2B-004 & Seller Handover & Seller sees paid order and prepares shipment & Seller CN role & Order appears in Ready to Ship queue & High & Passed \\
+SCN-B2B-005 & Tracking Timeline & Buyer can track shipment status timeline in order detail & Order ORD-2026-0310 & Timeline updates in correct sequence & Medium & Passed \\
+SCN-B2B-006 & Language Clarity & Indonesian labels for tax and shipping are understandable & Language ID mode & No misleading label in checkout summary & High & Failed then passed \\
+SCN-B2B-007 & Duplicate Submission & Buyer clicks payment upload twice due to slow network & Same order repeated submit & System blocks duplicate submission safely & Critical & Passed \\
+SCN-B2B-008 & Session Timeout & Buyer session expires during checkout and resumes flow & Idle session 20 minutes & User is redirected safely and cart remains intact & Medium & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{5. Edge Condition Scenarios}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Scenario ID & Edge Condition & Expected Behavior & Priority & Result \\
+\hline
+EDGE-01 & Currency rate changes at checkout refresh & Total recalculates with clear info message & High & Passed \\
+EDGE-02 & Shipping lane unavailable after cart update & User gets fallback shipping option & High & Passed \\
+EDGE-03 & Seller updates stock before payment confirmation & Buyer gets stock warning before payment & Medium & Passed \\
+EDGE-04 & Network drop during payment proof upload & Upload resumes or fails with clear instruction & High & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{6. Linked Defects}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Bug ID & Linked Scenario & Issue Summary & Severity & Retest Result \\
+\hline
+BUG-B2B-312 & SCN-B2B-003 & Status sync delay between admin and buyer panel & Critical & Passed \\
+BUG-B2B-318 & SCN-B2B-006 & Tax label translation caused wrong interpretation & High & Passed \\
+\hline
+\end{tabular}
+
+\subsection*{7. Execution Summary}
+\begin{itemize}
+\item 1) Total scenarios: 8
+\item 2) Passed at first run: 6
+\item 3) Failed at first run: 2
+\item 4) Retest after fix: 2 passed
+\item 5) Edge scenarios executed: 4 passed
+\item 6) UAT blocker remaining: 0
+\end{itemize}
+
+\subsection*{8. QA Notes}
+\begin{itemize}
+\item 1) Scenario pack helps team test user journey, not only individual feature.
+\item 2) Critical path and edge path are both required before release sign-off.
+\item 3) Each failed scenario must map to bug ticket and retest evidence.
+\end{itemize}
+
+\subsection*{9. Redaction Note}
+Simulation shared in compliance with NDA.
+
+\end{document}
+`;
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+    <DocFrame hideHeader={true} plainPage={true}>
+      <div id="latex-live-root" class="latex-live-root">
+        <p class="latex-loading">Loading document...</p>
+      </div>
+    </DocFrame>
+  </main>
+
+  <script is:inline define:vars={{ latexSource }}>
+    (function () {
+      var source = (latexSource || "").trim();
+      var root = document.getElementById("latex-live-root");
+
+      function decodeLatexText(text) {
+        return text
+          .replace(/\\&/g, "&")
+          .replace(/\\%/g, "%")
+          .replace(/\\_/g, "_")
+          .replace(/\\#/g, "#")
+          .replace(/\\\$/g, "$")
+          .replace(/\\\\/g, " ");
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cleanInline(text) {
+        return escapeHtml(decodeLatexText(text.trim()));
+      }
+
+      function parseSection(line, command) {
+        var prefix = "\\" + command + "*{";
+        if (!line.startsWith(prefix) || !line.endsWith("}")) return null;
+        return line.slice(prefix.length, -1);
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) return "";
+        var header = rows[0];
+        var body = rows.slice(1);
+        var thead =
+          "<thead><tr>" +
+          header
+            .map(function (cell) {
+              return "<th>" + cleanInline(cell) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        var tbody =
+          "<tbody>" +
+          body
+            .map(function (row) {
+              return (
+                "<tr>" +
+                row
+                  .map(function (cell) {
+                    return "<td>" + cleanInline(cell) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return '<div class="latex-table-container"><table>' + thead + tbody + "</table></div>";
+      }
+
+      function renderLatexSubset(input) {
+        var lines = input.split(/\r?\n/);
+        var chunks = [];
+        var paragraph = [];
+        var i = 0;
+
+        function flushParagraph() {
+          if (!paragraph.length) return;
+          var text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+          if (text) chunks.push("<p>" + cleanInline(text) + "</p>");
+          paragraph = [];
+        }
+
+        while (i < lines.length) {
+          var line = lines[i].trim();
+          if (
+            !line ||
+            line.startsWith("\\documentclass") ||
+            line === "\\begin{document}" ||
+            line === "\\end{document}"
+          ) {
+            flushParagraph();
+            i += 1;
+            continue;
+          }
+
+          var sectionTitle = parseSection(line, "section");
+          if (sectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h2>" + cleanInline(sectionTitle) + "</h2>");
+            i += 1;
+            continue;
+          }
+
+          var subsectionTitle = parseSection(line, "subsection");
+          if (subsectionTitle !== null) {
+            flushParagraph();
+            chunks.push("<h3>" + cleanInline(subsectionTitle) + "</h3>");
+            i += 1;
+            continue;
+          }
+
+          if (line === "\\begin{itemize}") {
+            flushParagraph();
+            var items = [];
+            i += 1;
+            while (i < lines.length) {
+              var itemLine = lines[i].trim();
+              if (itemLine === "\\end{itemize}") break;
+              if (itemLine.startsWith("\\item")) {
+                items.push(itemLine.replace(/^\\item\s*/, ""));
+              }
+              i += 1;
+            }
+            chunks.push(
+              "<ul>" +
+                items
+                  .map(function (item) {
+                    return "<li>" + cleanInline(item) + "</li>";
+                  })
+                  .join("") +
+                "</ul>"
+            );
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\begin{tabular}")) {
+            flushParagraph();
+            var rows = [];
+            i += 1;
+            while (i < lines.length) {
+              var raw = lines[i].trim();
+              if (raw === "\\end{tabular}") break;
+              if (!raw || raw === "\\hline") {
+                i += 1;
+                continue;
+              }
+              var normalized = raw.replace(/\\\\$/, "").trim();
+              var cells = normalized.split("&").map(function (cell) {
+                return cell.trim();
+              });
+              rows.push(cells);
+              i += 1;
+            }
+            chunks.push(renderTable(rows));
+            i += 1;
+            continue;
+          }
+
+          if (line.startsWith("\\")) {
+            i += 1;
+            continue;
+          }
+
+          paragraph.push(line.replace(/\\\\$/, "").trim());
+          i += 1;
+        }
+
+        flushParagraph();
+        return chunks.join("");
+      }
+
+      try {
+        if (!root) return;
+        root.innerHTML = '<article class="latex-doc testcases-doc">' + renderLatexSubset(source) + "</article>";
+      } catch (error) {
+        if (root) {
+          root.innerHTML = '<p class="latex-loading">Render fallback active. Please refresh the page.</p>';
+        }
+      }
+    })();
+  </script>
+</BlogLayout>

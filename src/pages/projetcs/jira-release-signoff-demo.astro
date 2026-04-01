@@ -1,0 +1,112 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { site } from "@/data/site.config";
+import DocFrame from "@/components/DocFrame.astro";
+
+const title = "Jira Ticket Documentation";
+const description =
+  "Live sample of QA release sign-off note with validation checklist, residual risk, and mitigation.";
+
+const signoff = {
+  release: "RC-2026.03.22",
+  owner: "Theodore",
+  decision: "CONDITIONAL GO",
+  scope: "Checkout, approval workflow, callback processing",
+  checklist: [
+    ["Check Item", "Status", "Notes"],
+    ["Critical path test execution", "Pass", "All blocking scenarios validated"],
+    ["API contract validation", "Pass", "No breaking schema drift detected"],
+    ["Known critical defects", "Pass", "None open at release decision time"],
+    ["Rollback readiness", "Pass", "Procedure reviewed with engineering lead"],
+    ["Monitoring readiness", "Pass", "Alert thresholds configured and tested"],
+  ],
+  knownIssues: [
+    "Two medium UI alignment issues (non-blocking).",
+    "One low-priority localization wording issue.",
+  ],
+  residualRisk:
+    "Low-to-medium risk for rare retry sequence under unstable network conditions.",
+  mitigation: [
+    "Monitor callback error rate for first 24 hours after release.",
+    "Trigger rollback checklist if threshold is exceeded.",
+  ],
+};
+---
+
+<BlogLayout title={title} description={description}>
+  <header class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center">
+    <a href="/" class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity">
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Portfolio</span>
+    </a>
+    <a href="/" class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+      ← All Projects
+    </a>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-20">
+<DocFrame label="Live Artifact Preview" title={title} meta="Release sign-off sample • web-first review format">
+    <section class="pt-4 pb-8">
+      <p class="text-[13px] md:text-[14px] font-mono uppercase tracking-[0.14em] text-[var(--foreground-muted)] mb-4">Live Sample</p>
+      <h1 class="text-[42px] md:text-[58px] font-serif leading-[0.95] tracking-[-0.03em] text-[var(--foreground-primary)] mb-4">Release Sign-off Note</h1>
+      <p class="text-[15px] md:text-[17px] leading-[1.7] text-[var(--foreground-secondary)] max-w-[780px]">
+        QA release documentation sample for go/no-go decision with transparent validation evidence and risk ownership.
+      </p>
+    </section>
+
+    <section class="project-bento-card p-5 md:p-6 mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <p class="text-[14px] text-[var(--foreground-secondary)]"><span class="font-medium text-[var(--foreground-primary)]">Release:</span> {signoff.release}</p>
+        <p class="text-[14px] text-[var(--foreground-secondary)]"><span class="font-medium text-[var(--foreground-primary)]">QA Owner:</span> {signoff.owner}</p>
+        <p class="text-[14px] text-[var(--foreground-secondary)]"><span class="font-medium text-[var(--foreground-primary)]">Decision:</span> {signoff.decision}</p>
+        <p class="text-[14px] text-[var(--foreground-secondary)]"><span class="font-medium text-[var(--foreground-primary)]">Scope:</span> {signoff.scope}</p>
+      </div>
+    </section>
+
+    <section class="project-bento-card p-5 md:p-6 mb-4">
+      <h2 class="text-[24px] md:text-[30px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Validation Checklist</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left border border-[var(--border-color)]">
+          <tbody>
+            {signoff.checklist.map((row, i) => (
+              <tr class={i === 0 ? "bg-[rgba(0,0,0,0.03)] dark:bg-[rgba(255,255,255,0.08)]" : ""}>
+                {row.map((col) => (
+                  <td class={`border border-[var(--border-color)] px-3 py-2 text-[13px] md:text-[14px] ${i === 0 ? "font-medium text-[var(--foreground-primary)]" : "text-[var(--foreground-secondary)]"}`}>
+                    {col}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <article class="project-bento-card p-5 md:p-6">
+        <h2 class="text-[20px] md:text-[24px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Known Non-Blocking Issues</h2>
+        <ul class="space-y-2">
+          {signoff.knownIssues.map((item) => (
+            <li class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">• {item}</li>
+          ))}
+        </ul>
+      </article>
+      <article class="project-bento-card p-5 md:p-6">
+        <h2 class="text-[20px] md:text-[24px] font-serif text-[var(--foreground-primary)] leading-[1.1] mb-3">Residual Risk</h2>
+        <p class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">{signoff.residualRisk}</p>
+        <ul class="space-y-2 mt-3">
+          {signoff.mitigation.map((item) => (
+            <li class="text-[14px] md:text-[15px] leading-[1.7] text-[var(--foreground-secondary)]">• {item}</li>
+          ))}
+        </ul>
+      </article>
+    </section>
+
+    <section class="mt-12 border-t border-[var(--border-color)] pt-8">
+      <p class="text-[13px] md:text-[14px] text-[var(--foreground-secondary)]">
+        Need this sign-off format for your release workflow?
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 text-[var(--foreground-primary)] ml-1">Let&apos;s connect</a>
+      </p>
+    </section>
+  </DocFrame>
+  </main>
+</BlogLayout>
