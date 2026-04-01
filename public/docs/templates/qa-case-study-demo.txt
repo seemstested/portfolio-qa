@@ -1,0 +1,32 @@
+QUALITY ASSURANCE CASE STUDY (SANITIZED DEMO)
+
+Project: Cross-Border Checkout Reliability
+Role: Software QA Engineer
+Period: Q1 2026
+
+1) Context
+A logistics platform release introduced multi-currency checkout, role-based approval, and callback-based payment confirmation.
+
+2) Risk
+- Currency mismatch between checkout UI and payment response
+- Approval race condition when approver action and callback happen simultaneously
+- Order status inconsistency under network retry
+
+3) Approach
+- Risk-based test charter for high-impact financial flows
+- Structured data matrix (currency x role x region x order state)
+- API negative testing for timeout, duplicate callback, malformed payload
+- Pre-release triage by severity, user impact, and rollback complexity
+
+4) Key Findings
+- Rounding mismatch in two currency scenarios
+- Approval-state race condition under concurrent events
+- Inconsistent order status after callback retry
+
+5) Impact
+- Critical issues found before production
+- Better release confidence for payment and approval flows
+- Reduced support escalation risk for launch window
+
+6) Redaction Note
+Client names, IDs, endpoints, and personal data are masked.

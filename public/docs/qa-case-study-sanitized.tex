@@ -1,0 +1,109 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+\definecolor{heading}{HTML}{111111}
+\definecolor{textmuted}{HTML}{555555}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black
+}
+
+\titleformat{\section}{\large\bfseries\color{heading}}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{heading}}{\thesubsection.}{0.6em}{}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.25em,topsep=0.3em}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE \textbf{QUALITY ASSURANCE CASE STUDY --- SANITIZED DEMO}}\\[0.5em]
+  {\Large Cross-Border Checkout Reliability}
+\end{center}
+
+\vspace{0.8em}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.28\textwidth}X}
+\toprule
+Document Field & Value \\
+\midrule
+Version & 1.0 \\
+Prepared By & Theodore --- Software QA Engineer \\
+Date & March 2026 \\
+Classification & Portfolio Sample (Sanitized) \\
+\bottomrule
+\end{tabularx}
+
+\section*{Executive Summary}
+This case study documents a risk-driven QA strategy for a cross-border logistics checkout flow with payment callback dependencies and approval workflow complexity.
+
+\section*{Context}
+\begin{itemize}
+  \item Multi-currency checkout with dynamic conversion rules
+  \item Role-based approval before fulfillment
+  \item Cross-region API dependencies with retry behavior
+\end{itemize}
+
+\section*{Scope}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.48\textwidth}>{\bfseries}X}
+\toprule
+In Scope & Out of Scope \\
+\midrule
+Checkout totals and conversion & Marketing pages and CMS \\
+Approval workflow states & Legacy archived orders \\
+Payment callback handling & 3rd party billing portal UI \\
+\bottomrule
+\end{tabularx}
+
+\section*{Risk Matrix}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.28\textwidth}>{\bfseries}p{0.14\textwidth}>{\bfseries}p{0.12\textwidth}>{\bfseries}X}
+\toprule
+Risk & Likelihood & Impact & Mitigation \\
+\midrule
+Currency rounding mismatch & Medium & High & Boundary-value matrix and DB assertion \\
+Approval race condition & Medium & High & Concurrent-event scenario tests \\
+Callback retry inconsistency & Low & High & Negative API tests and idempotency checks \\
+\bottomrule
+\end{tabularx}
+
+\section*{Test Strategy}
+\begin{itemize}
+  \item Risk-based prioritization for financial critical path
+  \item Matrix-driven test data for role, region, currency, and order state
+  \item API contract and negative testing for resilience
+  \item Release triage by severity, user impact, and rollback complexity
+\end{itemize}
+
+\section*{Key Findings}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{0.14\textwidth}>{\bfseries}p{0.12\textwidth}>{\bfseries}p{0.14\textwidth}>{\bfseries}X}
+\toprule
+Finding ID & Severity & Status & Summary \\
+\midrule
+F-101 & Critical & Resolved & Rounding mismatch in two conversion scenarios \\
+F-104 & High & Resolved & Approval state race under callback concurrency \\
+F-109 & Medium & Accepted & Retry delay edge case under unstable network \\
+\bottomrule
+\end{tabularx}
+
+\section*{Impact and Release Recommendation}
+\begin{itemize}
+  \item Critical issues detected and resolved before production
+  \item Higher release confidence for checkout and approval flow
+  \item Recommendation: GO with monitoring guardrail for retry anomalies
+\end{itemize}
+
+\section*{Redaction Note}
+\textcolor{textmuted}{All client names, internal IDs, endpoints, and personally identifiable data are masked for portfolio publication.}
+
+\end{document}
