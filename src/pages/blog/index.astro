@@ -1,14 +1,49 @@
 ---
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import NavbarControls from "@/components/NavbarControls.astro";
 import { site } from "@/data/site.config";
 
 const icons = {
     arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
-    sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
-    moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
 };
 
 const articles = [
+    {
+        title: "The Zero-Bug Myth in Fast-Moving Teams: Why Quality Is About Risk, Not Perfection",
+        description: "A reflection from startup QA reality: tight timelines, huge bug backlogs, and the pressure to ship. Quality improves when teams manage risk, not chase impossible perfection.",
+        category: "QA Culture",
+        readTime: "7 min",
+        date: "March 27, 2026",
+        slug: "/blog/the-zero-bug-myth-in-fast-moving-teams",
+        image: "/images/gallery/hackathon.png",
+    },
+    {
+        title: "The Cost of Over-Engineering Products: Building Unicorn Features for Nobody",
+        description: "When teams skip MVP and ignore user feedback, product development becomes expensive guesswork. A practical reflection from startup reality.",
+        category: "Product Quality",
+        readTime: "7 min",
+        date: "March 21, 2026",
+        slug: "/blog/the-cost-of-over-engineering-products",
+        image: "/images/gallery/canyon.png",
+    },
+    {
+        title: "Agile Methodologies for Quality Products: Lessons From a Team That Moved Too Fast",
+        description: "Fast delivery without agile discipline creates hidden quality debt. A practical reflection on how Scrum and Kanban protect product quality and team health.",
+        category: "Agile & Quality",
+        readTime: "6 min",
+        date: "March 14, 2026",
+        slug: "/blog/agile-methodologies-for-quality-products",
+        image: "/images/gallery/bootcamp.png",
+    },
+    {
+        title: "Release Confidence Is a System: How QA Turns Uncertainty Into Predictability",
+        description: "Shipping safely is not luck. It is the result of a clear release contract, risk-based testing, and fast feedback loops owned by the whole team.",
+        category: "Release Quality",
+        readTime: "7 min",
+        date: "March 9, 2026",
+        slug: "/blog/release-confidence-is-a-system",
+        image: "/images/gallery/pyramid.png",
+    },
     {
         title: "The Art of Intentional Breaking: Why QA Starts Before the First Line of Code",
         description: "True quality engineering isn't just about finding bugs; it is about architecting systems that are resilient by design.",
@@ -21,7 +56,12 @@ const articles = [
 ];
 ---
 
-<BlogLayout title="Articles" description="Thoughts on quality engineering, test automation, and building resilient software.">
+<BlogLayout
+    title="Articles"
+    description="Thoughts on quality engineering, test automation, and building resilient software."
+    image="/images/og/blog-share.svg"
+    imageAlt="Theodore's Blog - Notes on quality, risk, and shipping."
+>
     <!-- Navigation -->
     <header
         class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center bg-transparent relative z-10"
@@ -33,14 +73,7 @@ const articles = [
             Theodore's <span class="text-[var(--foreground-muted)] font-normal">Blogs</span>
         </a>
         <div class="flex items-center gap-4">
-            <button
-                id="blog-theme-toggle"
-                class="w-8 h-8 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] hover:border-[var(--foreground-primary)] transition-all"
-                aria-label="Toggle theme"
-            >
-                <span class="dark:hidden" set:html={icons.sun}></span>
-                <span class="hidden dark:block" set:html={icons.moon}></span>
-            </button>
+            <NavbarControls />
             <a
                 href="/"
                 class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
@@ -53,10 +86,11 @@ const articles = [
     <main class="w-full max-w-[960px] mx-auto px-6 pb-32">
         <!-- Page Header -->
         <div class="pt-6 md:pt-12 mb-16 md:mb-24">
-            <p class="text-[13px] md:text-[14px] font-mono uppercase text-[var(--foreground-muted)] mb-6 tracking-[0.15em]">
+            <p data-blog-i18n-key="blog_overline" class="text-[13px] md:text-[14px] font-mono uppercase text-[var(--foreground-muted)] mb-6 tracking-[0.15em]">
                 thoughts & insights
             </p>
             <h1
+                data-blog-i18n-key="blog_heading"
                 class="text-[44px] md:text-[64px] lg:text-[72px] font-sans font-medium tracking-tight leading-[0.95] text-[var(--foreground-primary)] max-w-[700px]"
             >
                 Writing about quality, code, and craft.
@@ -65,7 +99,7 @@ const articles = [
 
         <!-- Articles List -->
         <div class="space-y-8">
-            {articles.map((article) => (
+            {articles.map((article, index) => (
                 <a
                     href={article.slug}
                     class="group flex flex-col md:flex-row items-stretch overflow-hidden rounded-sm border border-[var(--border-color)] bg-[rgba(255,255,255,0.4)] dark:bg-[rgba(255,255,255,0.03)] transition-all duration-500 hover:border-[var(--foreground-primary)]"
@@ -76,27 +110,28 @@ const articles = [
                             alt={article.title}
                             class="h-full w-full object-cover min-h-[200px] grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
                             loading="lazy"
+                            decoding="async"
                         />
                     </div>
                     <div class="flex flex-1 flex-col justify-center p-8 md:p-10">
                         <div class="mb-4 flex items-center gap-3">
-                            <span class="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] px-2 py-1 border border-[var(--border-color)]">
+                            <span data-blog-i18n-key={`article_category_${index}`} class="text-[10px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] px-2 py-1 border border-[var(--border-color)]">
                                 {article.category}
                             </span>
-                            <span class="text-[11px] font-serif text-[var(--foreground-muted)] italic">
+                            <span data-blog-i18n-key={`article_readtime_${index}`} class="text-[11px] font-serif text-[var(--foreground-muted)] italic">
                                 {article.readTime}
                             </span>
                         </div>
-                        <h2 class="text-[24px] md:text-[28px] font-serif font-medium leading-[1.1] tracking-[-0.02em] text-[var(--foreground-primary)] mb-3 group-hover:underline underline-offset-4">
+                        <h2 data-blog-i18n-key={`article_title_${index}`} class="text-[24px] md:text-[28px] font-serif font-medium leading-[1.1] tracking-[-0.02em] text-[var(--foreground-primary)] mb-3 group-hover:underline underline-offset-4">
                             {article.title}
                         </h2>
-                        <p class="text-[14px] md:text-[15px] font-sans font-light leading-[1.6] text-[var(--foreground-secondary)] line-clamp-2">
+                        <p data-blog-i18n-key={`article_desc_${index}`} class="text-[14px] md:text-[15px] font-sans font-light leading-[1.6] text-[var(--foreground-secondary)] line-clamp-2">
                             {article.description}
                         </p>
                         <div class="mt-6 flex items-center justify-between">
-                            <span class="text-[12px] font-mono text-[var(--foreground-muted)]">{article.date}</span>
+                            <span data-blog-i18n-key={`article_date_${index}`} class="text-[12px] font-mono text-[var(--foreground-muted)]">{article.date}</span>
                             <span class="flex items-center gap-2 text-[12px] font-mono font-medium uppercase tracking-tight text-[var(--foreground-primary)] group-hover:gap-4 transition-all">
-                                Read <Fragment set:html={icons.arrow} />
+                                <span data-blog-i18n-key={`article_cta_${index}`}>Read</span> <Fragment set:html={icons.arrow} />
                             </span>
                         </div>
                     </div>
@@ -114,12 +149,85 @@ const articles = [
 </BlogLayout>
 
 <script>
-    const blogThemeToggle = document.getElementById("blog-theme-toggle");
-    blogThemeToggle?.addEventListener("click", () => {
-        document.documentElement.classList.toggle("dark");
-        localStorage.setItem(
-            "theme",
-            document.documentElement.classList.contains("dark") ? "dark" : "light"
-        );
-    });
+    window.__blogI18n = {
+        blog_overline: {
+            en: "thoughts & insights",
+            id: "catatan & insight",
+        },
+        blog_heading: {
+            en: "Writing about quality, code, and craft.",
+            id: "Cerita tentang quality, engineering, dan cara kerja tim produk.",
+        },
+        article_category_0: { en: "QA Culture", id: "Budaya QA" },
+        article_readtime_0: { en: "7 min", id: "7 menit" },
+        article_title_0: {
+            en: "The Zero-Bug Myth in Fast-Moving Teams: Why Quality Is About Risk, Not Perfection",
+            id: "Mitos Zero Bug di Tim Serba Cepat: Quality Itu Soal Risiko, Bukan Soal Sempurna",
+        },
+        article_desc_0: {
+            en: "A reflection from startup QA reality: tight timelines, huge bug backlogs, and the pressure to ship. Quality improves when teams manage risk, not chase impossible perfection.",
+            id: "Refleksi dari realita QA di startup: timeline mepet, backlog bug menumpuk, dan pressure buat tetap rilis. Kualitas naik saat tim mengelola risiko, bukan ngejar kesempurnaan yang nggak realistis.",
+        },
+        article_date_0: { en: "March 27, 2026", id: "27 Maret 2026" },
+        article_cta_0: { en: "Read", id: "Baca" },
+
+        article_category_1: { en: "Product Quality", id: "Kualitas Produk" },
+        article_readtime_1: { en: "7 min", id: "7 menit" },
+        article_title_1: {
+            en: "The Cost of Over-Engineering Products: Building Unicorn Features for Nobody",
+            id: "Biaya Over-Engineering Produk: Bangun Fitur Canggih yang Ujung-Ujungnya Nggak Kepakai",
+        },
+        article_desc_1: {
+            en: "When teams skip MVP and ignore user feedback, product development becomes expensive guesswork. A practical reflection from startup reality.",
+            id: "Saat tim melewati fase MVP dan mengabaikan feedback user, pengembangan produk berubah jadi tebak-tebakan yang mahal. Ini refleksi praktis dari realita startup.",
+        },
+        article_date_1: { en: "March 21, 2026", id: "21 Maret 2026" },
+        article_cta_1: { en: "Read", id: "Baca" },
+
+        article_category_2: { en: "Agile & Quality", id: "Agile & Kualitas" },
+        article_readtime_2: { en: "6 min", id: "6 menit" },
+        article_title_2: {
+            en: "Agile Methodologies for Quality Products: Lessons From a Team That Moved Too Fast",
+            id: "Metodologi Agile untuk Produk Berkualitas: Pelajaran dari Tim yang Terlalu Ngebut",
+        },
+        article_desc_2: {
+            en: "Fast delivery without agile discipline creates hidden quality debt. A practical reflection on how Scrum and Kanban protect product quality and team health.",
+            id: "Delivery cepat tanpa disiplin agile bikin utang kualitas yang sering nggak kelihatan di awal. Refleksi praktis tentang gimana Scrum dan Kanban bantu jaga kualitas produk sekaligus ritme tim.",
+        },
+        article_date_2: { en: "March 14, 2026", id: "14 Maret 2026" },
+        article_cta_2: { en: "Read", id: "Baca" },
+
+        article_category_3: { en: "Release Quality", id: "Kualitas Rilis" },
+        article_readtime_3: { en: "7 min", id: "7 menit" },
+        article_title_3: {
+            en: "Release Confidence Is a System: How QA Turns Uncertainty Into Predictability",
+            id: "Kepercayaan Saat Rilis Itu Dibangun Lewat Sistem: Cara QA Mengubah Ketidakpastian Jadi Lebih Terprediksi",
+        },
+        article_desc_3: {
+            en: "Shipping safely is not luck. It is the result of a clear release contract, risk-based testing, and fast feedback loops owned by the whole team.",
+            id: "Rilis yang aman bukan soal hoki. Itu hasil dari release contract yang jelas, testing berbasis risiko, dan feedback loop cepat yang dijaga bareng seluruh tim.",
+        },
+        article_date_3: { en: "March 9, 2026", id: "9 Maret 2026" },
+        article_cta_3: { en: "Read", id: "Baca" },
+
+        article_category_4: {
+            en: "Quality Engineering",
+            id: "Quality Engineering",
+        },
+        article_readtime_4: { en: "5 min", id: "5 menit" },
+        article_title_4: {
+            en: "The Art of Intentional Breaking: Why QA Starts Before the First Line of Code",
+            id: "Seni Menguji Secara Intensional: Kenapa QA Dimulai Sebelum Baris Kode Pertama",
+        },
+        article_desc_4: {
+            en: "True quality engineering isn't just about finding bugs; it is about architecting systems that are resilient by design.",
+            id: "Quality engineering yang matang bukan cuma soal cari bug, tapi soal merancang sistem yang tahan banting sejak dari desainnya.",
+        },
+        article_date_4: { en: "March 2, 2026", id: "2 Maret 2026" },
+        article_cta_4: { en: "Read", id: "Baca" },
+    };
+
+    const currentLang = localStorage.getItem("lang") === "id" ? "id" : "en";
+    if (typeof window.__applyBlogLang === "function")
+        window.__applyBlogLang(currentLang);
 </script>
