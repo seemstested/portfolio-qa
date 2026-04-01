@@ -1,0 +1,136 @@
+---
+const icons = {
+  sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`,
+  moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`,
+};
+---
+
+<div class="lang-menu">
+  <button
+    type="button"
+    class="lang-menu-trigger"
+    id="lang-menu-trigger"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls="lang-menu-panel"
+    title="Language"
+  >
+    <span class="lang-trigger-flag" aria-hidden="true">
+      <span class="lang-flag is-trigger" data-lang-icon="en">
+        <svg viewBox="0 0 64 64" width="16" height="16">
+          <rect width="64" height="64" fill="#FFFFFF"></rect>
+          <g fill="#B22234">
+            <rect y="0" width="64" height="6"></rect>
+            <rect y="12" width="64" height="6"></rect>
+            <rect y="24" width="64" height="6"></rect>
+            <rect y="36" width="64" height="6"></rect>
+            <rect y="48" width="64" height="6"></rect>
+            <rect y="60" width="64" height="6"></rect>
+          </g>
+          <rect x="0" y="0" width="30" height="30" fill="#3C3B6E"></rect>
+          <g fill="#fff" opacity="0.9">
+            <circle cx="6" cy="6" r="1.2"></circle>
+            <circle cx="14" cy="6" r="1.2"></circle>
+            <circle cx="22" cy="6" r="1.2"></circle>
+            <circle cx="10" cy="12" r="1.2"></circle>
+            <circle cx="18" cy="12" r="1.2"></circle>
+            <circle cx="26" cy="12" r="1.2"></circle>
+            <circle cx="6" cy="18" r="1.2"></circle>
+            <circle cx="14" cy="18" r="1.2"></circle>
+            <circle cx="22" cy="18" r="1.2"></circle>
+            <circle cx="10" cy="24" r="1.2"></circle>
+            <circle cx="18" cy="24" r="1.2"></circle>
+            <circle cx="26" cy="24" r="1.2"></circle>
+          </g>
+        </svg>
+      </span>
+      <span class="lang-flag is-trigger" data-lang-icon="id">
+        <svg viewBox="0 0 64 64" width="16" height="16">
+          <rect width="64" height="32" fill="#CE1126"></rect>
+          <rect y="32" width="64" height="32" fill="#FFFFFF"></rect>
+        </svg>
+      </span>
+    </span>
+    <span class="lang-trigger-code" id="lang-trigger-code">EN</span>
+    <svg
+      class="lang-chevron"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  </button>
+
+  <div class="lang-menu-panel" id="lang-menu-panel" role="menu" aria-label="Language">
+    <button type="button" class="lang-menu-item" data-lang="en" role="menuitem">
+      <span class="lang-flag" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="16" height="16">
+          <rect width="64" height="64" fill="#FFFFFF"></rect>
+          <g fill="#B22234">
+            <rect y="0" width="64" height="6"></rect>
+            <rect y="12" width="64" height="6"></rect>
+            <rect y="24" width="64" height="6"></rect>
+            <rect y="36" width="64" height="6"></rect>
+            <rect y="48" width="64" height="6"></rect>
+            <rect y="60" width="64" height="6"></rect>
+          </g>
+          <rect x="0" y="0" width="30" height="30" fill="#3C3B6E"></rect>
+        </svg>
+      </span>
+      <span class="lang-item-code">EN</span>
+      <svg
+        class="lang-item-check"
+        viewBox="0 0 24 24"
+        width="14"
+        height="14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </button>
+    <button type="button" class="lang-menu-item" data-lang="id" role="menuitem">
+      <span class="lang-flag" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="16" height="16">
+          <rect width="64" height="32" fill="#CE1126"></rect>
+          <rect y="32" width="64" height="32" fill="#FFFFFF"></rect>
+        </svg>
+      </span>
+      <span class="lang-item-code">ID</span>
+      <svg
+        class="lang-item-check"
+        viewBox="0 0 24 24"
+        width="14"
+        height="14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<button
+  class="top-theme-btn"
+  id="theme-toggle"
+  aria-label="Toggle theme"
+  type="button"
+>
+  <span class="dark:hidden" set:html={icons.sun} />
+  <span class="hidden dark:block" set:html={icons.moon} />
+</button>
