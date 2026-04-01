@@ -1,0 +1,311 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import NavbarControls from "@/components/NavbarControls.astro";
+import { site } from "@/data/site.config";
+
+const title =
+  "Agile Methodologies for Quality Products: Lessons From a Team That Moved Too Fast";
+const description =
+  "Fast delivery without agile discipline creates hidden quality debt. A practical reflection on how Scrum and Kanban protect product quality and team health.";
+const author = "Theodore";
+const publishedDate = "March 14, 2026";
+const readTime = "6 min";
+const category = "Agile & Quality";
+const image = "/images/gallery/diving.png";
+
+const icons = {
+  arrow: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>`,
+};
+---
+
+<BlogLayout
+  title={title}
+  description={description}
+  type="article"
+  image={image}
+  imageAlt={title}
+  publishedTime={publishedDate}
+  modifiedTime={publishedDate}
+  section={category}
+  tags={[category, "Quality Engineering", "QA", "Software Testing"]}
+>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <header
+    class="w-full max-w-[960px] mx-auto px-6 py-10 flex justify-between items-center bg-transparent relative z-10"
+  >
+    <a
+      href="/"
+      class="text-[20px] font-sans font-bold tracking-[-0.04em] text-[var(--foreground-primary)] hover:opacity-70 transition-opacity"
+    >
+      Theodore's <span class="text-[var(--foreground-muted)] font-normal">Blogs</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <NavbarControls />
+      <a
+        href="/blog"
+        class="text-[12px] font-sans font-medium uppercase tracking-[0.1em] text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors"
+      >
+        ← All Articles
+      </a>
+    </div>
+  </header>
+
+  <main class="w-full max-w-[960px] mx-auto px-6 pb-16">
+    <article class="pt-6 md:pt-12 fade-in">
+      <div class="mb-12 md:mb-16">
+        <p
+          class="text-[13px] md:text-[14px] font-mono uppercase text-[var(--foreground-muted)] mb-6 tracking-[0.15em]"
+        >
+          <span data-blog-i18n-key="meta_category">{category}</span>
+          <span class="mx-3 opacity-30">/</span>
+          <span data-blog-i18n-key="meta_readtime">{readTime}</span>
+        </p>
+        <h1
+          data-blog-i18n-key="title"
+          class="text-[44px] md:text-[64px] lg:text-[72px] font-sans font-medium tracking-tight leading-[0.95] text-[var(--foreground-primary)] max-w-[850px]"
+        >
+          {title}
+        </h1>
+      </div>
+
+      <div
+        class="w-full h-auto mb-16 md:mb-24 overflow-hidden relative fade-in fade-in-delay-2 rounded-sm"
+      >
+        <img
+          src={image}
+          alt={title}
+          class="w-full h-auto object-cover aspect-[16/9] md:aspect-[21/9] scale-[1.01]"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-12 md:gap-24 fade-in fade-in-delay-4">
+        <aside class="w-full md:w-[160px] flex-shrink-0">
+          <div class="md:sticky md:top-12 space-y-8">
+            <div class="border-t border-[var(--border-color)] pt-3">
+              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+                Published
+              </p>
+              <p
+                data-blog-i18n-key="published_date"
+                class="text-[14px] md:text-[15px] font-sans font-medium tracking-tight text-[var(--foreground-primary)]"
+              >
+                {publishedDate}
+              </p>
+            </div>
+            <div class="border-t border-[var(--border-color)] pt-3">
+              <p class="text-[12px] md:text-[13px] font-serif text-[var(--foreground-muted)] mb-1">
+                Author
+              </p>
+              <p
+                class="text-[14px] md:text-[15px] font-sans font-medium tracking-tight text-[var(--foreground-primary)]"
+              >
+                {author}
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        <div class="flex-1 max-w-[640px]">
+          <p
+            data-blog-i18n-key="intro"
+            class="text-[18px] md:text-[20px] leading-[1.7] font-serif text-[var(--foreground-primary)] mb-10 italic opacity-90"
+          >
+            I once worked in a startup where the pace was so extreme that every
+            day felt like a production fire drill. We moved fast, but we did
+            not move in a sustainable system. No real Scrum, no Kanban flow,
+            and QA was still fully manual.
+          </p>
+
+          <h2 data-blog-i18n-key="section_1_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Fast Pace Without Method Is Just Chaos
+          </h2>
+          <p data-blog-i18n-key="section_1_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            Working almost 12 hours per day became normal. Regression cycles got
+            longer, not shorter. Team energy dropped, quality issues repeated,
+            and everyone felt tired before the sprint ended. It looked fast from
+            the outside, but inside it was like running on a treadmill at max
+            speed without knowing where the finish line was.
+          </p>
+
+          <h2 data-blog-i18n-key="section_2_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Why Scrum Matters for Quality
+          </h2>
+          <p data-blog-i18n-key="section_2_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            Scrum is not ceremony for ceremony's sake. It creates rhythm.
+            Planning protects scope, daily sync reduces surprise, and sprint
+            review gives space for real feedback before bigger damage happens.
+            For QA, this rhythm means test strategy can be prepared earlier
+            instead of always reacting at the end.
+          </p>
+
+          <h2 data-blog-i18n-key="section_3_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Why Kanban Matters for QA Workload
+          </h2>
+          <p data-blog-i18n-key="section_3_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            Kanban helps teams see bottlenecks in plain sight. When too many
+            tickets are in progress, context switching explodes and quality
+            drops. A visible board with work-in-progress limits acts like a
+            traffic light system. It prevents the team from opening ten roads
+            at once and crashing into deadline pressure.
+          </p>
+
+          <h2 data-blog-i18n-key="section_4_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Manual QA Needs Process Even More
+          </h2>
+          <p data-blog-i18n-key="section_4_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            If QA is mostly manual, process discipline becomes critical. Without
+            prioritization, regression turns into endless clicking. With agile
+            discipline, QA can define risk-based scope, protect critical paths,
+            and avoid wasting time on low-impact checks while high-risk flows
+            stay uncovered.
+          </p>
+
+          <h2 data-blog-i18n-key="section_5_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Quality Product Means Healthy Team
+          </h2>
+          <p data-blog-i18n-key="section_5_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            Burnout is a product risk. A tired team misses details, delays
+            communication, and struggles to maintain consistency. Agile methods
+            are not just delivery tools. They are also guardrails that protect
+            people so quality can stay stable in the long run.
+          </p>
+
+          <h2 data-blog-i18n-key="section_6_title" class="text-[18px] md:text-[20px] font-sans font-medium tracking-tight text-[var(--foreground-primary)] mt-12 mb-4">
+            Final Reflection
+          </h2>
+          <p data-blog-i18n-key="section_6_body" class="text-[16px] md:text-[18px] leading-[1.8] font-serif text-[var(--foreground-secondary)] mb-8">
+            I still believe in speed, especially for startups. But speed without
+            structure is expensive. Scrum and Kanban give teams a simple
+            operating system to ship quality apps with less chaos. If a company
+            wants quality products, it must treat agile methodology as a product
+            quality investment, not an optional ritual.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <div class="mt-20 border-t border-[var(--border-color)] pt-12 max-w-[640px] ml-auto md:ml-[184px]">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div>
+          <p class="text-[12px] font-mono uppercase tracking-widest text-[var(--foreground-muted)] mb-2">Written by</p>
+          <p class="text-[18px] font-sans font-medium text-[var(--foreground-primary)]">{author}</p>
+          <p data-blog-i18n-key="author_role" class="text-[14px] font-serif text-[var(--foreground-secondary)] mt-1">Software Quality Assurance Engineer</p>
+        </div>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-5 py-2.5 text-[12px] font-mono font-medium uppercase tracking-widest border border-[var(--border-color)] rounded-full text-[var(--foreground-primary)] hover:bg-[var(--foreground-primary)] hover:text-[var(--background-warm)] transition-all"
+        >
+          View Portfolio <span set:html={icons.arrow}></span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-4 mt-8 pt-8 border-t border-[var(--border-color)]">
+        <a href="/blog/" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+          ← All Articles
+        </a>
+        <span class="text-[var(--border-color)]">·</span>
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+          LinkedIn
+        </a>
+        <span class="text-[var(--border-color)]">·</span>
+        <a href={site.github} target="_blank" rel="noopener noreferrer" class="text-[13px] font-sans text-[var(--foreground-muted)] hover:text-[var(--foreground-primary)] transition-colors">
+          GitHub
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-[960px] mx-auto px-6 py-8 text-center border-t border-[var(--border-color)] mt-8">
+    <p class="text-[10px] text-[var(--foreground-muted)] tracking-[0.08em] uppercase">
+      © {new Date().getFullYear()} {site.author} · Built with Astro
+    </p>
+  </footer>
+</BlogLayout>
+
+<script>
+  window.__blogI18n = {
+    meta_category: { en: "Agile & Quality", id: "Agile & Kualitas" },
+    meta_readtime: { en: "6 min", id: "6 menit" },
+    title: {
+      en: "Agile Methodologies for Quality Products: Lessons From a Team That Moved Too Fast",
+      id: "Metodologi Agile untuk Produk Berkualitas: Pelajaran dari Tim yang Terlalu Ngebut",
+    },
+    published_date: { en: "March 14, 2026", id: "14 Maret 2026" },
+    intro: {
+      en: "I once worked in a startup where the pace was so extreme that every day felt like a production fire drill. We moved fast, but we did not move in a sustainable system. No real Scrum, no Kanban flow, and QA was still fully manual.",
+      id: "Saya pernah kerja di startup dengan pace ekstrem sampai tiap hari rasanya kayak fire drill di production. Geraknya cepat, tapi nggak dalam sistem yang sustainable. Scrum-nya nggak jalan beneran, flow Kanban nggak kebentuk, dan QA masih full manual.",
+    },
+    section_1_title: {
+      en: "Fast Pace Without Method Is Just Chaos",
+      id: "Pace Kencang Tanpa Metode Itu Cuma Chaos",
+    },
+    section_1_body: {
+      en: "Working almost 12 hours per day became normal. Regression cycles got longer, not shorter. Team energy dropped, quality issues repeated, and everyone felt tired before the sprint ended. It looked fast from the outside, but inside it was like running on a treadmill at max speed without knowing where the finish line was.",
+      id: "Kerja hampir 12 jam sehari jadi hal biasa. Siklus regression bukannya makin pendek, malah makin panjang. Energi tim turun, masalah kualitas berulang, dan semua sudah capek sebelum sprint selesai. Dari luar kelihatan ngebut, tapi dari dalam rasanya kayak lari di treadmill paling kencang tanpa tahu garis finisnya di mana.",
+    },
+    section_2_title: {
+      en: "Why Scrum Matters for Quality",
+      id: "Kenapa Scrum Penting untuk Kualitas",
+    },
+    section_2_body: {
+      en: "Scrum is not ceremony for ceremony's sake. It creates rhythm. Planning protects scope, daily sync reduces surprise, and sprint review gives space for real feedback before bigger damage happens. For QA, this rhythm means test strategy can be prepared earlier instead of always reacting at the end.",
+      id: "Scrum bukan sekadar seremoni. Scrum bikin ritme kerja. Planning jaga scope, daily sync ngurangin kejutan, dan sprint review kasih ruang buat feedback nyata sebelum masalahnya membesar. Buat QA, ritme ini bikin strategi test bisa disiapkan dari awal, bukan selalu reaktif di akhir.",
+    },
+    section_3_title: {
+      en: "Why Kanban Matters for QA Workload",
+      id: "Kenapa Kanban Penting untuk Beban Kerja QA",
+    },
+    section_3_body: {
+      en: "Kanban helps teams see bottlenecks in plain sight. When too many tickets are in progress, context switching explodes and quality drops. A visible board with work-in-progress limits acts like a traffic light system. It prevents the team from opening ten roads at once and crashing into deadline pressure.",
+      id: "Kanban bantu tim melihat bottleneck dengan jelas. Saat tiket yang dikerjakan bersamaan terlalu banyak, context switching meledak dan kualitas turun. Board yang terlihat plus batas work-in-progress itu mirip lampu lalu lintas: mencegah tim buka terlalu banyak jalur sekaligus lalu tabrakan sama tekanan deadline.",
+    },
+    section_4_title: {
+      en: "Manual QA Needs Process Even More",
+      id: "QA Manual Justru Lebih Butuh Proses",
+    },
+    section_4_body: {
+      en: "If QA is mostly manual, process discipline becomes critical. Without prioritization, regression turns into endless clicking. With agile discipline, QA can define risk-based scope, protect critical paths, and avoid wasting time on low-impact checks while high-risk flows stay uncovered.",
+      id: "Kalau QA masih dominan manual, disiplin proses jadi makin krusial. Tanpa prioritas, regression berubah jadi klik tanpa ujung. Dengan disiplin agile, QA bisa nentuin scope berbasis risiko, ngelindungin critical path, dan nggak buang waktu di pengecekan impact rendah sementara flow berisiko tinggi malah bolong.",
+    },
+    section_5_title: {
+      en: "Quality Product Means Healthy Team",
+      id: "Produk Berkualitas Butuh Tim yang Sehat",
+    },
+    section_5_body: {
+      en: "Burnout is a product risk. A tired team misses details, delays communication, and struggles to maintain consistency. Agile methods are not just delivery tools. They are also guardrails that protect people so quality can stay stable in the long run.",
+      id: "Burnout itu risiko produk. Tim yang kelelahan gampang miss detail, komunikasi terlambat, dan konsistensi jadi sulit dijaga. Metode agile bukan cuma alat delivery, tapi juga guardrail untuk menjaga orang-orangnya supaya kualitas tetap stabil dalam jangka panjang.",
+    },
+    section_6_title: {
+      en: "Final Reflection",
+      id: "Refleksi Penutup",
+    },
+    section_6_body: {
+      en: "I still believe in speed, especially for startups. But speed without structure is expensive. Scrum and Kanban give teams a simple operating system to ship quality apps with less chaos. If a company wants quality products, it must treat agile methodology as a product quality investment, not an optional ritual.",
+      id: "Saya tetap percaya kecepatan itu penting, terutama buat startup. Tapi ngebut tanpa struktur itu mahal. Scrum dan Kanban ngasih tim operating system sederhana buat ngirim produk berkualitas dengan chaos yang jauh lebih kecil. Kalau perusahaan mau produk berkualitas, metodologi agile harus diperlakukan sebagai investasi kualitas, bukan ritual opsional.",
+    },
+    author_role: {
+      en: "Software Quality Assurance Engineer",
+      id: "Software Quality Assurance Engineer",
+    },
+  };
+
+  const currentLang = localStorage.getItem("lang") === "id" ? "id" : "en";
+  if (typeof window.__applyBlogLang === "function")
+    window.__applyBlogLang(currentLang);
+
+  const progressBar = document.getElementById("scroll-progress") as HTMLElement;
+  window.addEventListener(
+    "scroll",
+    () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressBar)
+        progressBar.style.width = `${h > 0 ? (window.scrollY / h) * 100 : 0}%`;
+    },
+    { passive: true }
+  );
+
+</script>
