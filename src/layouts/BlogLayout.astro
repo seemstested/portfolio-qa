@@ -1,5 +1,6 @@
 ---
 import SEO from "@/components/SEO.astro";
+import ChatbotWidget from "@/components/ChatbotWidget.astro";
 import "@/styles/global.css";
 
 interface Props {
@@ -27,7 +28,7 @@ const {
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
     <head>
         <meta charset="UTF-8" />
@@ -72,11 +73,11 @@ const {
                 background: var(--foreground-primary);
                 opacity: 0.15;
             }
-
         </style>
     </head>
     <body class="min-h-screen antialiased flex flex-col items-center">
         <slot />
+        <ChatbotWidget apiUrl={import.meta.env.PUBLIC_CHATBOT_API_URL} />
         <script is:inline>
             (function () {
                 const getI18nMap = () =>
@@ -89,8 +90,10 @@ const {
                 const themeBtn = document.getElementById("theme-toggle");
                 const langMenuTrigger =
                     document.getElementById("lang-menu-trigger");
-                const langMenuPanel = document.getElementById("lang-menu-panel");
-                const langTriggerCode = document.getElementById("lang-trigger-code");
+                const langMenuPanel =
+                    document.getElementById("lang-menu-panel");
+                const langTriggerCode =
+                    document.getElementById("lang-trigger-code");
                 const langMenuItems = document.querySelectorAll(
                     ".lang-menu-item[data-lang]",
                 );
@@ -98,19 +101,28 @@ const {
                 const applyDetailText = (lang) => {
                     const isId = lang === "id";
 
-                    document.querySelectorAll('a[href="/blog"]').forEach((el) => {
-                        if (!(el instanceof HTMLAnchorElement)) return;
-                        const txt = (el.textContent || "").trim();
-                        if (!txt.includes("All") && !txt.includes("Semua")) return;
-                        el.textContent = isId ? "← Semua Artikel" : "← All Articles";
-                    });
+                    document
+                        .querySelectorAll('a[href="/blog"]')
+                        .forEach((el) => {
+                            if (!(el instanceof HTMLAnchorElement)) return;
+                            const txt = (el.textContent || "").trim();
+                            if (!txt.includes("All") && !txt.includes("Semua"))
+                                return;
+                            el.textContent = isId
+                                ? "← Semua Artikel"
+                                : "← All Articles";
+                        });
 
-                    document.querySelectorAll("header a[href='/']").forEach((el) => {
-                        if (!(el instanceof HTMLAnchorElement)) return;
-                        const txt = (el.textContent || "").trim();
-                        if (!txt.startsWith("←")) return;
-                        el.textContent = isId ? "← Portofolio" : "← Portfolio";
-                    });
+                    document
+                        .querySelectorAll("header a[href='/']")
+                        .forEach((el) => {
+                            if (!(el instanceof HTMLAnchorElement)) return;
+                            const txt = (el.textContent || "").trim();
+                            if (!txt.startsWith("←")) return;
+                            el.textContent = isId
+                                ? "← Portofolio"
+                                : "← Portfolio";
+                        });
 
                     document
                         .querySelectorAll("a[href='/'].inline-flex")
@@ -133,7 +145,9 @@ const {
                             el.textContent = isId ? "Penulis" : "Author";
                         }
                         if (text === "Written by" || text === "Ditulis oleh") {
-                            el.textContent = isId ? "Ditulis oleh" : "Written by";
+                            el.textContent = isId
+                                ? "Ditulis oleh"
+                                : "Written by";
                         }
                     });
 
@@ -145,7 +159,9 @@ const {
                         ) {
                             el.textContent = text.replace(
                                 /Built with Astro|Dibangun dengan Astro/g,
-                                isId ? "Dibangun dengan Astro" : "Built with Astro",
+                                isId
+                                    ? "Dibangun dengan Astro"
+                                    : "Built with Astro",
                             );
                         }
                     });
@@ -161,8 +177,11 @@ const {
                                 const entry = i18nMap[key];
                                 if (!entry) return;
                                 const text =
-                                    lang === "id" ? entry.id || entry.en : entry.en;
-                                if (typeof text === "string") el.textContent = text;
+                                    lang === "id"
+                                        ? entry.id || entry.en
+                                        : entry.en;
+                                if (typeof text === "string")
+                                    el.textContent = text;
                             });
                     }
                 };
@@ -187,7 +206,10 @@ const {
                         if (!(btn instanceof HTMLButtonElement)) return;
                         const active = btn.dataset.lang === lang;
                         btn.classList.toggle("is-active", active);
-                        btn.setAttribute("aria-current", active ? "true" : "false");
+                        btn.setAttribute(
+                            "aria-current",
+                            active ? "true" : "false",
+                        );
                     });
 
                     applyDetailText(lang);
@@ -219,14 +241,17 @@ const {
                     } else {
                         langMenuPanel.classList.add("open");
                         if (langMenuTrigger instanceof HTMLElement)
-                            langMenuTrigger.setAttribute("aria-expanded", "true");
+                            langMenuTrigger.setAttribute(
+                                "aria-expanded",
+                                "true",
+                            );
                     }
                 });
 
                 langMenuItems.forEach((btn) => {
                     if (!(btn instanceof HTMLButtonElement)) return;
                     btn.addEventListener("click", () => {
-                        applyLang((btn.dataset.lang === "id" ? "id" : "en"));
+                        applyLang(btn.dataset.lang === "id" ? "id" : "en");
                         closeLangMenu();
                     });
                 });

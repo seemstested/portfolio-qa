@@ -51,3 +51,33 @@ Build output is generated in `dist/`.
 ├── package.json
 └── astro.config.mjs
 ```
+## Blog Authoring Notes
+
+- Article metadata is stored in `src/data/articles.ts`
+- Article pages live in `src/pages/blog/*.astro`
+- Raw draft notes can be stored in `src/pages/blog/raw/`
+- Blog language strings are defined per page via `window.__blogI18n`
+
+## Chatbot Widget
+
+This repo now includes a floating chatbot widget (`Chat Assistant`) on portfolio and blog pages.
+
+- Default behavior is fully free and local fallback responses
+- Optional AI mode can be enabled by setting:
+
+```bash
+PUBLIC_CHATBOT_API_URL=https://your-endpoint.example.com/chat
+```
+
+Expected API response shape:
+
+```json
+{ "reply": "your model answer" }
+```
+
+## Common Update Paths
+
+- Update homepage copy and sections: `src/pages/index.astro`
+- Add or update blog metadata: `src/data/articles.ts`
+- Edit blog listing UI/text: `src/pages/blog/index.astro`
+- Adjust blog layout behavior (theme/lang): `src/layouts/BlogLayout.astro`

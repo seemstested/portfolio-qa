@@ -1,0 +1,523 @@
+---
+interface Props {
+  apiUrl?: string;
+}
+
+const { apiUrl = "" } = Astro.props;
+---
+
+<div
+  id="qa-chatbot-root"
+  class="qa-chatbot-root"
+  data-chatbot-api={apiUrl}
+  aria-live="polite"
+>
+  <button
+    id="qa-chatbot-toggle"
+    class="qa-chatbot-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="qa-chatbot-panel"
+  >
+    <span>Chat Assistant</span>
+  </button>
+
+  <section
+    id="qa-chatbot-panel"
+    class="qa-chatbot-panel"
+    role="dialog"
+    aria-label="Chat Assistant"
+    aria-hidden="true"
+  >
+    <header class="qa-chatbot-header">
+      <div class="qa-chatbot-title">
+        <div class="qa-chatbot-title-copy">
+          <strong>Chat Assistant</strong>
+          <span>fast ideas, summaries, and next steps</span>
+        </div>
+      </div>
+      <button
+        id="qa-chatbot-close"
+        class="qa-chatbot-close"
+        type="button"
+        aria-label="Close chat"
+      >
+        ✕
+      </button>
+    </header>
+
+    <div class="qa-chatbot-shell">
+      <div class="qa-chatbot-hero">
+        <h3 class="qa-chatbot-hero-title">
+          Ask anything. Get a clean direction in seconds.
+        </h3>
+        <p class="qa-chatbot-hero-sub">
+          Built for quick brainstorming and structured outputs.
+        </p>
+      </div>
+
+      <div id="qa-chatbot-messages" class="qa-chatbot-messages">
+        <div class="qa-msg qa-msg-bot">
+          Ask me anything. I can help with ideas, writing, planning, and more.
+        </div>
+      </div>
+
+      <div class="qa-chatbot-quick">
+        <button class="qa-chip" type="button">Brainstorm ideas</button>
+        <button class="qa-chip" type="button">Summarize this topic</button>
+        <button class="qa-chip" type="button">Plan next steps</button>
+      </div>
+
+      <form id="qa-chatbot-form" class="qa-chatbot-form">
+        <input
+          id="qa-chatbot-input"
+          class="qa-chatbot-input"
+          type="text"
+          placeholder="Ask or request..."
+          autocomplete="off"
+        />
+        <button class="qa-chatbot-send" type="submit">Send</button>
+      </form>
+
+      <p class="qa-chatbot-note">
+        Free mode active
+      </p>
+    </div>
+  </section>
+</div>
+
+<style is:global>
+  .qa-chatbot-root {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 80;
+  }
+
+  .qa-chatbot-toggle {
+    border: 1px solid rgba(var(--accent-rgb), 0.25);
+    background:
+      radial-gradient(circle at 20% 20%, rgba(var(--accent-rgb), 0.16), transparent 45%),
+      linear-gradient(135deg, rgba(var(--accent-rgb), 0.1), rgba(var(--accent-rgb), 0.02));
+    color: var(--foreground-primary);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+    backdrop-filter: blur(6px);
+    animation: qa-float 3.2s ease-in-out infinite;
+  }
+
+  .qa-chatbot-toggle:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow:
+      0 12px 26px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    animation-play-state: paused;
+  }
+
+  @keyframes qa-float {
+    0% {
+      transform: translateY(0);
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+      transform: translateY(-4px);
+      box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+    100% {
+      transform: translateY(0);
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .qa-chatbot-panel {
+    width: min(390px, calc(100vw - 20px));
+    height: 640px;
+    max-height: 70vh;
+    margin-top: 10px;
+    border: 1px solid rgba(var(--accent-rgb), 0.16);
+    background:
+      radial-gradient(circle at 0% 0%, rgba(var(--accent-rgb), 0.12), transparent 38%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.9));
+    border-radius: 20px;
+    box-shadow:
+      0 18px 52px rgba(0, 0, 0, 0.2),
+      0 1px 0 rgba(255, 255, 255, 0.45) inset;
+    display: none;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+    transform-origin: right bottom;
+    backdrop-filter: blur(18px) saturate(130%);
+  }
+
+  .qa-chatbot-panel.open {
+    display: grid;
+    animation: qa-chatbot-in 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .dark .qa-chatbot-panel {
+    border-color: rgba(255, 255, 255, 0.1);
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.08), transparent 35%),
+      linear-gradient(180deg, rgba(22, 22, 24, 0.98), rgba(14, 14, 16, 0.93));
+    box-shadow:
+      0 20px 56px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  }
+
+  @keyframes qa-chatbot-in {
+    to {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .qa-chatbot-header {
+    padding: 12px 12px 10px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    backdrop-filter: blur(6px);
+  }
+
+  .qa-chatbot-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .qa-chatbot-title-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .qa-chatbot-title-copy strong {
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    color: var(--foreground-primary);
+  }
+
+  .qa-chatbot-title-copy span {
+    font-size: 11px;
+    color: var(--foreground-muted);
+  }
+
+  .qa-chatbot-shell {
+    margin: 0;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+    padding: 10px;
+  }
+
+  .qa-chatbot-hero {
+    border: 1px solid rgba(var(--accent-rgb), 0.13);
+    background:
+      radial-gradient(circle at 85% 15%, rgba(151, 196, 255, 0.28), transparent 40%),
+      radial-gradient(circle at 20% 100%, rgba(255, 179, 202, 0.3), transparent 42%),
+      linear-gradient(150deg, rgba(255, 255, 255, 0.85), rgba(252, 243, 248, 0.7));
+    border-radius: 14px;
+    padding: 14px 14px 12px;
+    margin-bottom: 10px;
+  }
+
+  .dark .qa-chatbot-hero {
+    border-color: rgba(255, 255, 255, 0.1);
+    background:
+      radial-gradient(circle at 85% 15%, rgba(114, 137, 255, 0.22), transparent 40%),
+      radial-gradient(circle at 20% 100%, rgba(255, 145, 181, 0.16), transparent 42%),
+      linear-gradient(150deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  }
+
+  .qa-chatbot-hero-title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--foreground-primary);
+    max-width: 280px;
+  }
+
+  .qa-chatbot-hero-sub {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--foreground-secondary);
+  }
+
+  .qa-chatbot-close {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.75);
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .qa-chatbot-messages {
+    padding: 2px 2px 8px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 210px;
+  }
+
+  .qa-msg {
+    padding: 11px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 92%;
+    white-space: pre-wrap;
+    animation: qa-fade-in 180ms ease;
+  }
+
+  @keyframes qa-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .qa-msg-user {
+    align-self: flex-end;
+    background:
+      linear-gradient(135deg, rgba(145, 128, 248, 0.42), rgba(201, 164, 246, 0.34));
+    color: var(--foreground-primary);
+    border: 1px solid rgba(138, 99, 232, 0.2);
+  }
+
+  .qa-msg-bot {
+    align-self: flex-start;
+    border: 1px solid rgba(var(--accent-rgb), 0.12);
+    color: var(--foreground-secondary);
+    background: rgba(255, 255, 255, 0.74);
+  }
+
+  .dark .qa-msg-bot {
+    background: rgba(255, 255, 255, 0.76);
+  }
+
+  .qa-chatbot-quick {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 0 2px 10px;
+  }
+
+  .qa-chip {
+    border: 1px solid rgba(var(--accent-rgb), 0.14);
+    background: rgba(255, 255, 255, 0.66);
+    color: var(--foreground-primary);
+    border-radius: 999px;
+    font-size: 12px;
+    text-align: left;
+    font-weight: 600;
+    line-height: 1.2;
+    min-height: 34px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    transition: all 170ms ease;
+  }
+
+  .qa-chip:hover {
+    background: rgba(var(--accent-rgb), 0.12);
+    transform: translateY(-1px);
+  }
+
+  .qa-chatbot-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 0 2px 8px;
+  }
+
+  .qa-chatbot-input {
+    border: 1px solid rgba(var(--accent-rgb), 0.12);
+    background: rgba(255, 255, 255, 0.62);
+    color: var(--foreground-primary);
+    border-radius: 999px;
+    padding: 10px 12px;
+    font-size: 13px;
+    transition: border-color 170ms ease, box-shadow 170ms ease;
+    flex: 1;
+  }
+
+  .dark .qa-chatbot-input {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .qa-chatbot-input:focus {
+    outline: none;
+    border-color: rgba(var(--accent-rgb), 0.4);
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+  }
+
+  .qa-chatbot-send {
+    border: 1px solid rgba(136, 109, 228, 0.28);
+    border-radius: 999px;
+    background: linear-gradient(135deg, #c98ad6, #98a3ed);
+    color: rgba(255, 255, 255, 0.96);
+    padding: 10px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: transform 170ms ease, box-shadow 170ms ease;
+  }
+
+  .qa-chatbot-send:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .qa-chatbot-note {
+    margin: 0;
+    padding: 0 4px 2px;
+    font-size: 10px;
+    color: var(--foreground-muted);
+    text-align: left;
+  }
+
+  @media (max-width: 640px) {
+    .qa-chatbot-root {
+      right: 10px;
+      bottom: 86px;
+    }
+
+    .qa-chatbot-panel {
+      width: min(390px, calc(100vw - 12px));
+      max-height: 68vh;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const root = document.getElementById("qa-chatbot-root");
+    if (!(root instanceof HTMLElement)) return;
+
+    const apiUrl = root.dataset.chatbotApi || "";
+    const toggle = document.getElementById("qa-chatbot-toggle");
+    const panel = document.getElementById("qa-chatbot-panel");
+    const close = document.getElementById("qa-chatbot-close");
+    const form = document.getElementById("qa-chatbot-form");
+    const input = document.getElementById("qa-chatbot-input");
+    const messages = document.getElementById("qa-chatbot-messages");
+    const chips = root.querySelectorAll(".qa-chip");
+
+    const fallback = (text) => {
+      const q = text.toLowerCase();
+      if (q.includes("test case")) {
+        return "Start with happy path, edge cases, and failure path.\nUse precondition, steps, expected result, and priority.";
+      }
+      if (q.includes("bug")) {
+        return "Bug report template:\n1) Title\n2) Environment\n3) Steps to reproduce\n4) Actual result\n5) Expected result\n6) Severity and priority\n7) Evidence";
+      }
+      if (q.includes("plan") || q.includes("next step")) {
+        return "Quick next-step plan:\n1) Define the goal clearly\n2) Break into 3 small actions\n3) Pick one action to ship today";
+      }
+      if (q.includes("summarize")) {
+        return "Share your text and I will summarize it into key points, risks, and recommended actions.";
+      }
+      if (q.includes("idea") || q.includes("brainstorm")) {
+        return "Brainstorm format:\n- Problem statement\n- User pain\n- 3 solution options\n- Fastest MVP experiment";
+      }
+      return "I can help with writing, planning, product thinking, and QA topics. Ask me a specific context and I will give a practical answer.";
+    };
+
+    const pushMessage = (text, kind) => {
+      if (!(messages instanceof HTMLElement)) return;
+      const bubble = document.createElement("div");
+      bubble.className = `qa-msg ${kind === "user" ? "qa-msg-user" : "qa-msg-bot"}`;
+      bubble.textContent = text;
+      messages.appendChild(bubble);
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    const ask = async (text) => {
+      if (!apiUrl) return fallback(text);
+      try {
+        const res = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ message: text }),
+        });
+        if (!res.ok) throw new Error("api error");
+        const data = await res.json();
+        return typeof data.reply === "string" && data.reply.trim()
+          ? data.reply.trim()
+          : fallback(text);
+      } catch (_error) {
+        return fallback(text);
+      }
+    };
+
+    const onSubmit = async (text) => {
+      const value = text.trim();
+      if (!value) return;
+      pushMessage(value, "user");
+      pushMessage("Thinking...", "bot");
+      const reply = await ask(value);
+      if (!(messages instanceof HTMLElement)) return;
+      const last = messages.lastElementChild;
+      if (last instanceof HTMLElement) last.textContent = reply;
+    };
+
+    toggle?.addEventListener("click", () => {
+      if (!(panel instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement))
+        return;
+      const open = panel.classList.toggle("open");
+      panel.setAttribute("aria-hidden", open ? "false" : "true");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open && input instanceof HTMLInputElement) input.focus();
+    });
+
+    close?.addEventListener("click", () => {
+      if (!(panel instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement))
+        return;
+      panel.classList.remove("open");
+      panel.setAttribute("aria-hidden", "true");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!(input instanceof HTMLInputElement)) return;
+      const text = input.value;
+      input.value = "";
+      void onSubmit(text);
+    });
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        if (!(chip instanceof HTMLButtonElement)) return;
+        void onSubmit(chip.textContent || "");
+      });
+    });
+  })();
+</script>
