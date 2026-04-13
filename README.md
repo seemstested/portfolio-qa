@@ -58,23 +58,6 @@ Build output is generated in `dist/`.
 - Raw draft notes can be stored in `src/pages/blog/raw/`
 - Blog language strings are defined per page via `window.__blogI18n`
 
-## Chatbot Widget
-
-This repo now includes a floating chatbot widget (`Chat Assistant`) on portfolio and blog pages.
-
-- Default behavior is fully free and local fallback responses
-- Optional AI mode can be enabled by setting:
-
-```bash
-PUBLIC_CHATBOT_API_URL=https://your-endpoint.example.com/chat
-```
-
-Expected API response shape:
-
-```json
-{ "reply": "your model answer" }
-```
-
 ## Common Update Paths
 
 - Update homepage copy and sections: `src/pages/index.astro`

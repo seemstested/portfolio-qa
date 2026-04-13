@@ -1,6 +1,5 @@
 ---
 import SEO from "@/components/SEO.astro";
-import ChatbotWidget from "@/components/ChatbotWidget.astro";
 import "@/styles/global.css";
 
 interface Props {
@@ -77,7 +76,6 @@ const {
     </head>
     <body class="min-h-screen antialiased flex flex-col items-center">
         <slot />
-        <ChatbotWidget apiUrl={import.meta.env.PUBLIC_CHATBOT_API_URL} />
         <script is:inline>
             (function () {
                 const getI18nMap = () =>
